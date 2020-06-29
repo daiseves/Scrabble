@@ -1,7 +1,34 @@
 import PySimpleGUI as sg
+
 #----------------------- CLASE ATRIL -----------------------
 
 class Atril:
+    '''
+    Clase que representa un atril
+    
+    Atributos
+    ---------
+    bag : class
+        Representa mi bolsa de fichas
+    
+    
+    Métodos
+    -------
+    agregar_fichas:
+        agrega fichas al atril
+    cant_fichas_atril:
+        retorna cantidad de fichas del atril
+    atril_array:
+        retorna el atril
+    eliminar_ficha:
+        elimina fichas del atril
+    una_ficha:
+        toma ficha de la bolsa para ponerla en el atril   
+    reponer_fichas:
+        repone fichas faltantes del atril
+    
+    '''
+    
     def __init__(self, Bag):
         self.bag=Bag
         self.atril=[]
@@ -35,7 +62,7 @@ class Atril:
         
     def una_ficha(self):
         '''
-        Toma una dicha de la bolsa y se la agrega al atril del jugador
+        Toma una ficha de la bolsa y se la agrega al atril del jugador
         ''' 
         self.atril.append(self.bag.dar_ficha())
     
