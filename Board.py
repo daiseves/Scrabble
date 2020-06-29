@@ -6,7 +6,7 @@ import random
 
 class Board:
     '''
-      Clase que crea un tablero de juego según la dificultad ingresada por el usuario. Le agrega las casillas de bonusm
+      Board represent un tablero de juego de un tamaño específico, de acuerdo a la dificultad ingresada por el usuario. Le agrega las casillas de bonus
     '''
     def __init__(self, Bag, nivel):
         self.filas=0
