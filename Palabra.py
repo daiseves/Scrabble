@@ -80,7 +80,7 @@ class Palabra:
         return puntaje_total
         
 
-    # def get_palabra(self):
-        # return self.word
+    def get_palabra(self):
+        return self.word
 
         
