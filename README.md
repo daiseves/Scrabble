@@ -11,5 +11,5 @@ _Seminario de Lenguajes Python - Trabajo Final._
   * PySympleGUI
   * Pattern 
 
-## Integrantes del proyecto ✒️ 
+## Integrantes del proyecto 
   * [Maria Lara Remorini]
