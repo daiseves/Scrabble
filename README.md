@@ -16,3 +16,7 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
 
 ## Integrantes del proyecto 
   * [Maria Lara Remorini]
+  
+## Licencia
+  GNU General Public License v3.0
+
