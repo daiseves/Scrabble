@@ -16,7 +16,7 @@ def configuracion():
                 [sg.Text('Puntaje de cada ficha: ', font ='centaur 15', background_color='saddlebrown',pad=(60,5)), sg.Combo(values=puntajeFicha, size=(20, 30), key='__puntajeFicha__', pad=(60,30))],
                 [sg.Text('Cantidad de fichas por letra: ', font ='centaur 15', background_color='saddlebrown',pad=(60,5)), sg.Combo(values=cantidadFichas, size=(20, 30), key='__cantidadFichas__', pad=(8,30))],
                 [sg.Button('Guardar cambios',button_color=('white','#D2B3BB'), font='centaur 15', pad=(150,5)), sg.Button('Volver',button_color=('white','#D2B3BB'), font='centaur 15', pad=(90,5))],
-                [sg.Image(r'C:\Users\lara\Desktop\Python\Scrabble\ScrabbleWord.png',background_color='#E5CEAC')]
+                [sg.Image(image_filename='Imagenes/ScrabbleWord.png',background_color='#E5CEAC')]
                ]
     
     
