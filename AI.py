@@ -5,7 +5,8 @@ from pattern.es import tag, spelling, lexicon, verbs
 import Funciones as fun
 import PySimpleGUI as sg
 
-        
+
+#Función que devuelve una lista de combinaciones posibles con las letras del atril del jugador
 def combinaciones_pc(ficha_centro, jugador, cant_rondas):
     letras=jugador.atril_array()
     combinaciones=[]
@@ -14,9 +15,10 @@ def combinaciones_pc(ficha_centro, jugador, cant_rondas):
     for p in range(2, 9):
         lista_de_letras= list(itertools.permutations(list(letras), p))
         combinaciones.append(lista_de_letras)
-    return combinaciones[1]
+    return combinaciones[1]     #Devuelve sólo las combinaciones de tres letras. (2: cuatro letras. 3: cuatro letras....ó, sin índice, todas)
     
 
+#Función que genera una palabray la verifica
 def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero):
     found=True
     i=0
@@ -40,7 +42,8 @@ def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero):
         word=None
         return word, False
             
-    
+
+#Función que posiciona la palabra genereda en el tablero
 def posiciona_palabra(palabra, ficha_centro, dicTablero, board, jugador, window, cant_rondas, dicc):
     f=board.get_medio()[0]
     c=f
@@ -79,10 +82,18 @@ def posiciona_palabra(palabra, ficha_centro, dicTablero, board, jugador, window,
                 pos_atril=jugador.atril_array().index(palabra[i])
                 fun.actualizo_atril(window, pos_atril, (f,columna), palabra[i])
                 columna=columna+1
+                
+                
+                
+def valor_posicion(lista, ficha_central):
+    i=0
+    while lista[i]!=ficha_central:
+        i=i+1
+    return i 
         
+            
                 
-                
-                
+#Función que desarrolla el turno de la PC                
 def juega_PC(dicc,dicTablero, ficha_central, jugador, board, window, jugadores, cant_rondas,multiUser, multiPC, ultimaPalabra, nivel):
     palabra=generador_de_palabra(ficha_central, jugador, board, cant_rondas, dicTablero)
     if palabra[0]!=None:
@@ -99,9 +110,5 @@ def juega_PC(dicc,dicTablero, ficha_central, jugador, board, window, jugadores, 
 
     jugador.vaciar_dicc()
         
-def valor_posicion(lista, ficha_central):
-    i=0
-    while lista[i]!=ficha_central:
-        i=i+1
-    return i
+
         
