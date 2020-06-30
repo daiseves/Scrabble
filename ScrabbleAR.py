@@ -4,8 +4,8 @@ from Board import Board
 import random
 import AI as ai
 import Funciones as fun
-import jugar as j
-import configuracion as c
+import Jugar as j
+import Configuracion as c
 
 sg.theme_background_color('#E5CEAC')
 cant_rondas=1
