@@ -66,7 +66,7 @@ class Board:
         for m in aux[3]:
             esqueleto[m[0]][m[1]]=sg.Button(image_filename='Imagenes/-3.png', image_size=(37, 37), size=(4, 2), key=(m[0],m[1]), pad=(2,2))
         for n in aux[4]:
-            esqueleto[n[0]][n[1]]=sg.Button(image_filename'Imagenes/bomba.png', image_size=(37, 37), size=(4, 2), key=(n[0],n[1]), pad=(2,2), button_color=('white', 'white'))
+            esqueleto[n[0]][n[1]]=sg.Button(image_filename='Imagenes/bomba.png', image_size=(37, 37), size=(4, 2), key=(n[0],n[1]), pad=(2,2), button_color=('white', 'white'))
         for o in aux[5]:
             esqueleto[o[0]][o[1]]=sg.Button(image_filename='Imagenes/estrella.png', image_size=(37, 37), size=(4, 2), key=(o[0],o[1]), pad=(2,2), button_color=('white', 'white'))
         return esqueleto
