@@ -10,7 +10,6 @@ def configuracion():
         cantidadFichas=[]
 
         layout=[
-                [sg.Image(filename='Imagenes/ScrabbleWord.png', size=(1000,300),background_color='#E5CEAC')],
                 [sg.Text('Tiempo por ronda: ', font ='centaur 15', background_color='saddlebrown',pad=(60,5)), sg.Combo(values=tiempoRonda, size=(20, 100), key='__tiempoRonda__', pad=(90,30))] , 
                 [sg.Text('Nivel del juego: ',font ='centaur 15', background_color='saddlebrown',pad=(60,5)) , sg.Combo(values=nivelJuego, size=(20, 30), key='__nivelJuego__', pad=(120,30))],
                 [sg.Text('Puntaje de cada ficha: ', font ='centaur 15', background_color='saddlebrown',pad=(60,5)), sg.Combo(values=puntajeFicha, size=(20, 30), key='__puntajeFicha__', pad=(60,30))],
