@@ -70,6 +70,7 @@ class Atril:
         '''
         Repone las fichas faltantes en el atril del jugador, mientras haya en la bolsa
         ''' 
+        #reemplazar por un while porque no va a servir cuando la bolsa se quede sin fichas y aún falte llenar el atril
         for i in range(cant):
             if self.bag.cant_fichas_bolsa() > 0:
                 self.una_ficha()
