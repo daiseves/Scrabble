@@ -15,8 +15,7 @@ def instanciar_jugadores(bag, nom, jugadores):
     return jugadores
     
 #-------------------------------------------------------------------------------        
-
-
+#Funciones de la interfaz gráfica
 
 def columna_layout():
     columna =   [
@@ -45,9 +44,6 @@ def columna3():
                 [sg.Text("", size=(35, 3), key='__topten__', background_color='#D2B3BB')]
               ]
     return columna_3
-
-
-
 
 
 def atril_interfaz():
@@ -97,6 +93,8 @@ def completo_atril(window, jugador):
 
 #-------------------------------------------------------------------------------    
 
+#Función que me calcula el ganador del juego cuando aprieto el botón "Terminar Juego"
+
 def ganador(jugadores):
     max=0
     ganador=""
@@ -110,6 +108,8 @@ def ganador(jugadores):
     
 #-------------------------------------------------------------------------------       
 
+#Función que me actualiza los puntajes de los jugadores en pantalla
+
 def actualizar_multi(jugador,multiUser, multiPC):
     if jugador.get_name()=='PC':
         text='Puntaje de la PC: {}'.format(jugador.get_puntaje())
@@ -117,8 +117,11 @@ def actualizar_multi(jugador,multiUser, multiPC):
     else:
         text='Puntaje de {} : {}'.format(jugador.get_name(),jugador.get_puntaje())
         multiUser.Update(text)
+        
             
-    
+#-------------------------------------------------------------------------------       
+
+#Función que desarrolla el turno del usuario
 
 def validar_palabra(window, diccTablero, dicc, jugador, multiUser, multiPC, ultimaPalabra, cant_rondas, board, nivel):
     diccOrd=dict(sorted(dicc.items()))
@@ -144,22 +147,7 @@ def validar_palabra(window, diccTablero, dicc, jugador, multiUser, multiPC, ulti
 
 #-------------------------------------------------------------------------------        
 
-def actualizo_atril(window, vacio, event, aux):
-    window.FindElement(vacio).update("",button_color=('saddlebrown','#FFE0A3')) 
-    window.FindElement(event).update(aux, button_color=('saddlebrown','#FFE0A3')) 
-
-#-------------------------------------------------------------------------------        
-
-def next_player(jugador,jugadores):
-    if jugadores.index(jugador) != (len(jugadores)-1):
-        jugador=jugadores[jugadores.index(jugador)+1]
-    else:
-        jugador = jugadores[0]
-    sg.popup('Es el turno del jugador: ' ,jugador.get_name(), background_color='#FFE0A3', text_color='saddlebrown')
-    return jugador
-    
-#------------------------------------------------------------------------------- 
-
+#Funciones que influyen en el armado de palabra en el tablero. Determinan que sea por fila o columna
 
 def armar_palabra(dicc, event, aux, window, vacio, fila, columna, cant_rondas, board, diccTablero):
     if cant_rondas==1 or len(diccTablero)==1:
@@ -188,6 +176,7 @@ def pos_palabra(vieja_coord, nueva_coord, window, vacio, aux, dicc, fila, column
         juego(vieja_coord, nueva_coord, window, vacio, aux, dicc)
     else:
         sg.popup('Error. Movimiento no permitido.', background_color='#D2B3BB')
+        
             
 def juego (vieja_coord, nueva_coord,  window, vacio, aux, dicc):
     dicc[nueva_coord] = aux
@@ -209,7 +198,30 @@ def verificar_segunda(event, pos, dicc, aux, window, vacio):
             
     
 
-#-------------------------------------------------------------------------------        
+#------------------------------------------------------------------------------- 
+
+#Función que me actualiza el atril cuando se juega la ficha (vacía el espacio) y actualiza el tablero con la letra del atril
+
+def actualizo_atril(window, vacio, event, aux):
+    window.FindElement(vacio).update("",button_color=('saddlebrown','#FFE0A3')) 
+    window.FindElement(event).update(aux, button_color=('saddlebrown','#FFE0A3')) 
+
+#-------------------------------------------------------------------------------    
+
+#Función que me devuelve el jugador siguiente
+
+def next_player(jugador,jugadores):
+    if jugadores.index(jugador) != (len(jugadores)-1):
+        jugador=jugadores[jugadores.index(jugador)+1]
+    else:
+        jugador = jugadores[0]
+    sg.popup('Es el turno del jugador: ' ,jugador.get_name(), background_color='#FFE0A3', text_color='saddlebrown')
+    return jugador
+    
+    
+#------------------------------------------------------------------------------- 
+
+#Función que convierte los valores de mi diccionario en una lista de letras (con la que verifico si existe mi palabra)
     
 def a_lista(dic):
     listaLetras=[]
