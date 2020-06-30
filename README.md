@@ -1,10 +1,10 @@
-# ScrabbleAR.py
+# ScrabbleAR.py 🎲
 _Seminario de Lenguajes Python - Trabajo Final._
 
-## Información
+## Información 📝
 ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta ganar puntos mediante la formación de palabras sobre un tablero.
 
-## Tener en cuenta
+## Tener en cuenta ⚠️
   * De la configuración, sólo funciona el nivel, que modifica el tamaño del tablero
   * El nivel por defecto es 'Fácil'
   * Se pone una ficha aleatoria en el centro del tablero al comienzo del juego
@@ -16,7 +16,7 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
   * La casilla 'estrella' suma 5 puntos a la palabra
   * Las palabras se pueden acomodar sólo vertical u horizontalmente
   
-## Ejecución
+## Ejecución 💻
   * Descargar el repositorio
   * Descomprimir el contenido
   * Ejecutar el archivo ScrabbleAR.py
@@ -26,9 +26,9 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
  * [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI/) 
  * [Pattern](https://github.com/clips/pattern/)
 
-## Integrantes del proyecto 
+## Integrantes del proyecto 👧
   * [Maria Lara Remorini]
   
-## Licencia
+## Licencia 🔓
   GNU General Public License v3.0
 
