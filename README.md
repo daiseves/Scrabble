@@ -15,6 +15,7 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
   * La casilla 'bomba' resta 4 puntos a la palabra
   * La casilla 'estrella' suma 5 puntos a la palabra
   * Las palabras se pueden acomodar sólo vertical u horizontalmente
+  * La PC sólo forma combinaciones de palabras con tres letras (indicado dentro del código cómo cambiarlo)
   
 ## Ejecución 💻
   * Descargar el repositorio
