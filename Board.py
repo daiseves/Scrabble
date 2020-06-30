@@ -58,17 +58,17 @@ class Board:
         '''
         aux=self.coordenadas()
         for j in aux[0]:
-            esqueleto[j[0]][j[1]]=sg.Button(filename='Imagenes/x2.png', image_size=(37, 37), size=(4, 2), key=(j[0],j[1]), pad=(2,2), button_color=('white', '#79B7BF'))
+            esqueleto[j[0]][j[1]]=sg.Button(image_filename='Imagenes/x2.png', image_size=(37, 37), size=(4, 2), key=(j[0],j[1]), pad=(2,2), button_color=('white', '#79B7BF'))
         for k in aux[1]:
-            esqueleto[k[0]][k[1]]=sg.Button(filename='Imagenes/x3.png', image_size=(37, 37), size=(4, 2), key=(k[0],k[1]), pad=(2,2), button_color=('white', '#D2B3BB'))
+            esqueleto[k[0]][k[1]]=sg.Button(image_filename='Imagenes/x3.png', image_size=(37, 37), size=(4, 2), key=(k[0],k[1]), pad=(2,2), button_color=('white', '#D2B3BB'))
         for l in aux[2]:
-            esqueleto[l[0]][l[1]]=sg.Button(filename='Imagenes/-2.png', image_size=(37, 37), size=(4, 2), key=(l[0],l[1]), pad=(2,2))
+            esqueleto[l[0]][l[1]]=sg.Button(image_filename='Imagenes/-2.png', image_size=(37, 37), size=(4, 2), key=(l[0],l[1]), pad=(2,2))
         for m in aux[3]:
-            esqueleto[m[0]][m[1]]=sg.Button(filename='Imagenes/-3.png', image_size=(37, 37), size=(4, 2), key=(m[0],m[1]), pad=(2,2))
+            esqueleto[m[0]][m[1]]=sg.Button(image_filename='Imagenes/-3.png', image_size=(37, 37), size=(4, 2), key=(m[0],m[1]), pad=(2,2))
         for n in aux[4]:
-            esqueleto[n[0]][n[1]]=sg.Button(filename='Imagenes/bomba.png', image_size=(37, 37), size=(4, 2), key=(n[0],n[1]), pad=(2,2), button_color=('white', 'white'))
+            esqueleto[n[0]][n[1]]=sg.Button(image_filename'Imagenes/bomba.png', image_size=(37, 37), size=(4, 2), key=(n[0],n[1]), pad=(2,2), button_color=('white', 'white'))
         for o in aux[5]:
-            esqueleto[o[0]][o[1]]=sg.Button(filename='Imagenes/estrella.png', image_size=(37, 37), size=(4, 2), key=(o[0],o[1]), pad=(2,2), button_color=('white', 'white'))
+            esqueleto[o[0]][o[1]]=sg.Button(image_filename='Imagenes/estrella.png', image_size=(37, 37), size=(4, 2), key=(o[0],o[1]), pad=(2,2), button_color=('white', 'white'))
         return esqueleto
         
         
