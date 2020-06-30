@@ -14,7 +14,7 @@ jugadores=[]
 bag=Bag()
 
 layout = [
-            [sg.Image(r'C:\Users\lara\Desktop\Python\Scrabble\ScrabbleWord.png', size=(1000,300),background_color='#E5CEAC')],
+            [sg.Image(image_filename='Imagenes/ScrabbleWord.png', size=(1000,300),background_color='#E5CEAC')],
             [sg.Text('NOMBRE:', font ='centaur 30', size=(13,1), justification='center',background_color='#E5CEAC'), sg.InputText(key='__nombre__',size=(30,1), font='Courier 30')],
             [sg.Text("",background_color='#E5CEAC')],
             [sg.Text("",background_color='#E5CEAC')],
