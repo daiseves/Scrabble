@@ -88,23 +88,27 @@ class Board:
         esqueleto[m][s]=sg.Button(fichita,size=(4, 2), key=(m,s), pad=(2,2), button_color=('saddlebrown','#FFE0A3'))
         return esqueleto
         
-    def get_board(self):
+    def get_board(self, carga, dic):
         '''
-        Arma mi tablero final y lo retorna
+        Arma mi tablero final y lo retorna. Si la partida es cargada, retorna el tablero guardado, de lo contrario, retorna un tablero vacío
         '''
         aux=self.esqueleto()
         aux2=self.agregar_bonus(aux)
         tablerogame=self.agregar_centro(aux2)
-        return tablerogame
+        if carga:
+            t=self.guardo_board(dic, tablerogame)
+            return t
+        else:
+            return tablerogame
         
-    def devolver_fichas(self, dic, cant_rondas, window):
+    def devolver_fichas(self, dic, cant_rondas, window, diccTablero):
         '''
         Recibe como parámetros el  atril del jugador, la cantidad de rondas y mi window. 
         Si es la primera ronda jugada, elimina del diccionario del jugador la ficha del centro para no tenerla en cuenta.
         Devuelve las fichas jugadas si es que la palabra que se jugó no fue válida
         '''
         a=dic.copy()
-        if cant_rondas==1:
+        if cant_rondas==1 or len(diccTablero)==1:
             if self.nivel == 'Fácil':
                 del a[(7,7)]
             elif self.nivel == 'Medio':
@@ -148,3 +152,14 @@ class Board:
             return imagesX2Dificil, imagesx3Dificil, imagesneg2Dificil, imagesneg3Dificil, imagesbombaDificil, imagesetrellaDificil
 
 
+         
+    def guardo_board(self, dic, tablerogame):
+        t=tablerogame
+        lista_values=[]
+        aux=0
+        for j in dic.values():
+            lista_values.append(j)
+        for i in dic.keys():
+            t[i[0]][i[1]]=sg.Button(lista_values[aux], button_color=('saddlebrown','#FFE0A3'), size=(4, 2), pad=(2,2))
+            aux+=1
+        return t
