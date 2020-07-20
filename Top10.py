@@ -17,6 +17,21 @@ def muestro_valores(datos, lista):
         lista.append(aux)
 
 
+def guardo_puntajes(jugador, nivel):
+    with open('Archivos/Top10.json','r+') as f:
+        json_data = json.load(f)
+        puntaje=jugador.get_puntaje()
+        fecha = datetime.now()
+        fecha = "{} de {} del {}".format(fecha.day, fecha.month, fecha.year)
+        valores={"Fecha": fecha, "Puntaje":puntaje, "Nivel": nivel}
+        json_data[nivel].append(valores)
+        f.seek(0)
+        f.write(json.dumps(json_data))
+        f.truncate()
+        sg.popup('Se ha guardado el puntaje.',background_color='#E5CEAC', text_color='saddlebrown')
+        
+        
+        
 def main():
     sg.theme_background_color('#E5CEAC')
     des= {'button_color':('white','saddlebrown'), 'font':('centaur',15), 'pad':((0,40)), 'size':(10,1)}
