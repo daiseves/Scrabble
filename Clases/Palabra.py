@@ -78,4 +78,7 @@ class Palabra:
         
 
     def get_palabra(self):
+        '''
+        Retorna mi palabra.
+        ''' 
         return self.word
