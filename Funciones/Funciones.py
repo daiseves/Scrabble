@@ -149,8 +149,12 @@ def calcular(window, bag, jugadores):
     Función que resta al puntaje de cada jugador, el valor de las fichas que quedaron en su atril al final el juego. Retorna dos cadenas con cada letra y su valor para mostrarlo por pantalla y los dos puntajes finales.
     '''
     valores=bag.valores_letras()
+    valores=bag.valores_letras()
     lista1=[]
     lista2=[]
+    
+    print(jugadores[0].atril_array())
+    print(jugadores[1].atril_array())
     
     aux=7
     resta=0
@@ -161,9 +165,10 @@ def calcular(window, bag, jugadores):
         text1 = text1 + '- Letra: {} | Puntaje: {}\n'.format(jugadores[0].atril_array()[i], valores.get(jugadores[0].atril_array()[i]))
         resta = resta + valores.get(jugadores[0].atril_array()[i])
 
-    total1 = jugadores[0].get_puntaje() - resta
-    jugadores[0].set_puntajeFinal(total1)
-    
+    total = jugadores[0].get_puntaje() - resta
+    jugadores[0].set_puntajeFinal(total)
+    final1 = '-Puntaje del jugador: {}\n-Suma de las fichas que quedaron en el atril: {}\n{} - {} = {} '.format(jugadores[0].get_puntaje(), resta, jugadores[0].get_puntaje(), resta, total)
+
     resta=0
     for j in range(len(jugadores[1].atril_array())):
         window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
@@ -171,10 +176,11 @@ def calcular(window, bag, jugadores):
         resta = resta + valores.get(jugadores[1].atril_array()[j])
         aux+=1
         
-    total2 = jugadores[1].get_puntaje() - resta
-    jugadores[1].set_puntajeFinal(total2)
+    total = jugadores[1].get_puntaje() - resta
+    jugadores[1].set_puntajeFinal(total)
+    final2 ='-Puntaje del jugador: {}\n-Suma de las fichas que quedaron en el atril: {}\n{} - {} = {} '.format(jugadores[1].get_puntaje(), resta, jugadores[1].get_puntaje(), resta, total)
     
-    return text1, text2, total1, total2
+    return text1, text2, final1, final2
   
 
 def termino_juego(jugadores, bag):
