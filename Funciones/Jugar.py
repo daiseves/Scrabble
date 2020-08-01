@@ -6,6 +6,9 @@ from Funciones import Top10 as top
 from Funciones import Funciones as fun
 
 def actualizo_consideraciones(window, tiempo_partida, tiempo_ronda, nivel, bag):
+    ''' 
+    Función que actualiza las consideraciones del nivel dispuesto por el usuario para mostrarlas por pantalla.
+    ''' 
     valores_letras=bag.valores_letras()
     cantidad_letras=bag.diccionario_cantidad()
     n='Nivel de la partida: {}'.format(nivel)
@@ -21,7 +24,9 @@ def actualizo_consideraciones(window, tiempo_partida, tiempo_ronda, nivel, bag):
     
 
 def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, cant_rondas, jugadores, nivel, ultima_palabra, bag, carga, cant_cambios):
-    
+    ''' 
+    Función que desarrolla cada turno, tanto los de la Pc como los del usuario.
+    ''' 
     atril=[]
     fila=True
     columna=True
@@ -150,6 +155,10 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
     
     
 def jugar(bag, board, diccTablero, jugadores, jugador_actual, nivel, cant_rondas, ultima_palabra, carga, tiempo_partida, tiempo_ronda, cant_cambios):
+    
+    ''' 
+    Función que desarolla la interfaz gráfica principal, donde se muestra el tablero. Inicializa las consideraciones y comienza el turno del primer jugador.
+    ''' 
 
     des={'background_color':('#D2B3BB'), 'size':(290,800), 'element_justification':'center'}
     des2={'text_color':('saddlebrown'), 'font':('Verdana', 13, 'bold')}
