@@ -177,6 +177,9 @@ class Board:
 
 
     def lista_coordenadas(self):
+        ''' 
+        Retorna una sola lista con todas las coordenadas donde hay bonus según el nivel.
+        ''' 
         coordenadas=self.coordenadas()
         lista_coord=[]
         for elem in coordenadas:
