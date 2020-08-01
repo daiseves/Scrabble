@@ -9,6 +9,9 @@ from Funciones import Configuracion as c
 
 
 def inicio():
+    ''' 
+    Función que verifica si existe una partida guardada. 
+    ''' 
     if path.exists('Archivos/partidaGuardada.pckl'):
         preguntar()
     else:
@@ -16,6 +19,9 @@ def inicio():
         
         
 def preguntar():
+    ''' 
+    Función que desarrolla mi interfaz gráfica donde pregunto si desea continuar con la partida guardada (si es que existe).
+    ''' 
     des={'font':('Verdana', 10), 'size':(10, 2)}
     layout=[[sg.Text("Hay una partida guardada ¿Desea continuarla?", font=("Current",13),  text_color= 'saddlebrown', pad=(0,10))], [sg.Button('Si', **des), sg.Button('No', **des)]]
     
@@ -29,7 +35,9 @@ def preguntar():
         
 
 def main():
-    
+    ''' 
+    Función que desarrolla una nueva partida
+    ''' 
     des={'font':("Current",16), 'size':(16, 2)}
         
     layout = [
@@ -65,5 +73,5 @@ def main():
             jugador_actual=jugadores[0]
             carga=False
             j.jugar(bag, board, diccTablero, jugadores, jugador_actual, config[0]['__dificultad__'], cant_rondas, ultima_palabra, carga, config[0]['__tiempoPartida__'], config[0]['__tiempoTurno__'], cant_cambios)
-            #f.termino_juego(jugadores, bag)
+
 
