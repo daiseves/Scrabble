@@ -5,7 +5,7 @@ _Seminario de Lenguajes Python - Trabajo Final._
 ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta ganar puntos mediante la formación de palabras sobre un tablero.
 
 ## Tener en cuenta ⚠️
-  * De la configuración, sólo funciona el nivel, que modifica el tamaño del tablero.
+  * La configuración del nivel modifica el tamaño del tablero. (Fácil: tablero de 15x15: - Medio: tablero de 17x17 - Difícil: tablero de 19x19). Cambian además las casillas de       bonus con el fin de aumentarle la complejidad al armado de palabras. 
   * El nivel por defecto es 'Fácil'.
   * Se pone una ficha aleatoria en el centro del tablero al comienzo del juego
   * La segunda ficha ingresada debe estar al lado de la primer ficha dispuesta, tanto al inicio del juego  (válido tanto para la Pc como para el jugador) como al inicio de cada     ronda
@@ -17,6 +17,7 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
   * Las palabras se pueden acomodar sólo vertical u horizontalmente.
   * Las palabras no pueden superponerse. 
   * La PC sólo forma combinaciones de palabras con tres letras (indicado dentro del código cómo cambiarlo).
+  * El usuario debe armar palabras de dos letras o más.
   
 ## Ejecución 💻
   * Descargar el repositorio
