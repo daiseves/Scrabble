@@ -5,8 +5,17 @@ from Clases.Palabra import Palabra
 from Funciones import Funciones as fun
 from pattern.es import tag, spelling, lexicon, verbs
 
-#Función que devuelve una lista de combinaciones posibles con las letras del atril del jugador
+
+
 def combinaciones_pc(ficha_centro, jugador, cant_rondas):
+    
+    """
+    Función que retorna una lista de combinaciones posibles realizadas con las letras del atril de la PC. 
+    Retorna sólo las combinaciones de tres letras.
+    
+    """
+    
+    
     letras=jugador.atril_array()
     combinaciones=[]
     if cant_rondas==1:
@@ -17,8 +26,14 @@ def combinaciones_pc(ficha_centro, jugador, cant_rondas):
     return combinaciones[1]     #Devuelve sólo las combinaciones de tres letras. (2: cuatro letras. 3: cuatro letras....ó, sin índice, todas)
     
 
-#Función que genera una palabray la verifica
+
 def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero, bag):
+   
+    """
+    Función que recibe una lista de combinaciones posibles y toma la primer palabra verificada como válida.
+    
+    """
+    
     found=True
     i=0
     combinaciones=combinaciones_pc(ficha_centro, jugador, cant_rondas)
@@ -42,12 +57,19 @@ def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero, 
         return word, False
             
 
-#Función que posiciona la palabra generada en el tablero
+
 def posiciona_palabra(palabra, ficha_centro, dicTablero, board, jugador, window, cant_rondas, dicc, lista_coordenadas):
+       
+    """
+    Función que posiciona en el tablero una palabra ya generada y tomada como válida.
+    
+    """
+    
     f=board.get_medio()[0]
     c=f
     if cant_rondas==1 or len(dicTablero)==1:
         dicc[(f, c)]=ficha_centro
+        #Recibo la posición de la letra que coincide con la ficha central para hacer el continue y poder posicionar la palabra de forma correcta sin superponer las fichas.
         vp=valor_posicion(palabra, ficha_centro)
         for i in range(len(palabra)):
             if i==vp:
@@ -95,7 +117,6 @@ def posiciona_palabra(palabra, ficha_centro, dicTablero, board, jugador, window,
                 hayEspacio=False
                 
                 
-            # HAY PROBLEMA SI NO HAY ESPACIO HAY QUEPONERLE UN TRY EXCEPT
             if hayEspacio:
                 fila=key[0]
                 columna=key[1]
@@ -110,20 +131,29 @@ def posiciona_palabra(palabra, ficha_centro, dicTablero, board, jugador, window,
                     else:
                         columna=columna+1
                 exito=True
-        print(dicTablero)
-                
                 
                 
 def valor_posicion(lista, ficha_central):
+       
+    """
+    De acuerdo a la palabra generada, devuelve la posición en la que se encuentra la letra que coincide con la ficha en el centro del tablero.
+    
+    """
+    
     i=0
     while lista[i]!=ficha_central:
         i=i+1
     return i 
         
             
-                
-#Función que desarrolla el turno de la PC                
+                              
 def juega_PC(dicc,dicTablero, ficha_central, jugador, board, window, jugadores, cant_rondas, multiUser, multiPC, ultimaPalabra, nivel, ultima_palabra, bag, lista_coordenadas):
+       
+    """
+    Función que desarrolla el turno de la PC.
+    
+    """
+    
     palabra=generador_de_palabra(ficha_central, jugador, board, cant_rondas, dicTablero, bag)
     if palabra[0]!=None:
         posiciona_palabra(palabra[0], ficha_central, dicTablero, board, jugador, window, cant_rondas, dicc, lista_coordenadas)
