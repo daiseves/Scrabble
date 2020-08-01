@@ -168,7 +168,7 @@ def calcular(window, bag, jugadores):
     for j in range(len(jugadores[1].atril_array())):
         window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
         text2 = text2 + '- Letra {} | Puntaje {}\n'.format(jugadores[1].atril_array()[j], valores.get(jugadores[1].atril_array()[j]))
-        resta = resta + valores.get(jugadores[1].atril_array()[i])
+        resta = resta + valores.get(jugadores[1].atril_array()[j])
         aux+=1
         
     total2 = jugadores[1].get_puntaje() - resta
