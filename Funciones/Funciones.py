@@ -11,6 +11,9 @@ from Clases.Jugador import Jugador
 primer_ronda= [(4,5),(5,4),(5,6),(6,5)]       
 
 def instanciar_jugadores(bag, nom, jugadores):
+    ''' 
+    Función que instancia los dos jugadores que van a jugar una partida.
+    ''' 
     jugador1 = Jugador(bag, nom)
     jugador2 = Jugador(bag, 'PC')
     jugadores.append(jugador1)
@@ -123,11 +126,13 @@ def actualizar_multi(jugador, frameUser, framePC):
 
 
 
-#-------------------------------------------------------------------------------    
+#----------------------------------FIN DEL JUEGO----------------------------------
 
-#Función que me calcula el ganador del juego cuando aprieto el botón "Terminar Juego"
 
 def ganador(jugadores):
+    '''
+    Función que recibe como parámetro mi lista de jugadores y me calcula el ganador del juego de acuerdo a sus puntajes.
+    '''
     max=-999
     ganador=""
     for jugador in jugadores:
@@ -139,47 +144,43 @@ def ganador(jugadores):
     
 
 
-#-------------------------------------------------------------------------------   
-
-
 def calcular(window, bag, jugadores):
+    '''
+    Función que resta al puntaje de cada jugador, el valor de las fichas que quedaron en su atril al final el juego. Retorna dos cadenas con cada letra y su valor para mostrarlo por pantalla y los dos puntajes finales.
+    '''
     valores=bag.valores_letras()
     lista1=[]
     lista2=[]
     
-    print(jugadores[0].atril_array())
-    print(jugadores[1].atril_array())
-    
     aux=7
     resta=0
+    text1=''
+    text2=''
     for i in range(len(jugadores[0].atril_array())):
         window.FindElement(i).update(jugadores[0].atril_array()[i])
-        text='Letra {}. Puntaje {}'.format(jugadores[0].atril_array()[i], valores.get(jugadores[0].atril_array()[i]))
+        text1 = text1 + '- Letra: {} | Puntaje: {}\n'.format(jugadores[0].atril_array()[i], valores.get(jugadores[0].atril_array()[i]))
         resta = resta + valores.get(jugadores[0].atril_array()[i])
-        lista1.append(text)
-    
+
     total1 = jugadores[0].get_puntaje() - resta
     jugadores[0].set_puntajeFinal(total1)
     
     resta=0
     for j in range(len(jugadores[1].atril_array())):
         window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
-        text='Letra {}. Puntaje {}'.format(jugadores[1].atril_array()[j], valores.get(jugadores[1].atril_array()[j]))
+        text2 = text2 + '- Letra {} | Puntaje {}\n'.format(jugadores[1].atril_array()[j], valores.get(jugadores[1].atril_array()[j]))
         resta = resta + valores.get(jugadores[1].atril_array()[i])
-        lista2.append(text)
         aux+=1
         
     total2 = jugadores[1].get_puntaje() - resta
     jugadores[1].set_puntajeFinal(total2)
     
-    return lista1, lista2, total1, total2
+    return text1, text2, total1, total2
   
-#-------------------------------------------------------------------------------       
-
-#Función que termina el juego si no hay más fichas en la bolsa para reponer en el atril
 
 def termino_juego(jugadores, bag):
-    
+    '''
+    Función que desarrolla la interfaz gráfica que se muestra una vez finalizado el juego
+    '''
     sg.SetOptions(background_color=('#E5CEAC'), text_element_background_color='#E5CEAC', element_background_color='#E5CEAC', text_color='saddlebrown')
     des={'font':('Verdana', 10), 'size':(12, 2)}
     des2={'button_color': ('saddlebrown','#FFE0A3'),'size':(4,2), 'font':('Verdana', 14), 'pad':(0 , 10)}
@@ -254,7 +255,7 @@ def validar_palabra(window, jugadores, diccTablero, dicc, jugador, multiUser, mu
     jugador.vaciar_dicc()
     
 
-#-------------------------------------------------------------------------------        
+#----------------------------------FUNCIONES QUE INTERVIENEN EN EL ARMADO DE UNA PALABRA SOBRE EL TABLERO----------------------------------
 
 #Funciones que influyen en el armado de palabra en el tablero. Determinan que sea por fila o columna
 
@@ -379,16 +380,20 @@ def next_player(jugador,jugadores):
     
     
 #------------------------------------------------------------------------------- 
-
-#Función que convierte los valores de mi diccionario en una lista de letras (con la que verifico si existe mi palabra)
     
 def a_lista(dic):
+    ''' 
+    Función que convierte los valores de mi diccionario en una lista de letras (con la que verifico si existe mi palabra).
+    ''' 
+    
     listaLetras=[]
     for elem in dic.values():
         listaLetras.append(elem)
     return listaLetras
 
-#------------------------------------------------------------------------------- 
+
+
+#----------------------------------FUNCIONES QUE INTERVIENEN EN EL GUARDADO Y LA CARGA DE UNA PARTIDA----------------------------------
 
 def set_partida():
     lista=[]
@@ -408,20 +413,24 @@ def set_partida():
     
     return lista
     
-#------------------------------------------------------------------------------- 
 
-#Función que guarda la partida. Recibe el tablero, el usuario, la PC y la bolsa de fichas y los almacena.
+
 def guardar_partida(dic, jugadores, bag, cant_rondas, ultima_palabra, nivel, cant_cambios, tiempo_partida, tiempo_ronda):
+    ''' 
+    Función que guarda una partida en proceso. Recibe el tablero, el usuario, la PC y la bolsa de fichas y los almacena.
+    ''' 
     ruta = os.path.join('Archivos', '')
     datos_guardar=[bag, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios]
     with open(f'{ruta}''partidaGuardada.pckl', 'wb') as f:
         pickle.dump(datos_guardar, f, pickle.HIGHEST_PROTOCOL)
     f.close()
     
-#------------------------------------------------------------------------------- 
 
-#Función que carga una partida guardada. 
+
 def cargar_partida():
+    ''' 
+    Función que carga una partida guardada. 
+    ''' 
     try:
         ruta = os.path.join('Archivos', '')
         with open(f'{ruta}''partidaGuardada.pckl', 'rb') as f:
@@ -443,9 +452,11 @@ def cargar_partida():
     else:
         return bolsa, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios
 
-#------------------------------------------------------------------------------- 
 
 def cargo(jugadores, multiUser, multiPC, ultimaPalabra, ultima_palabra, nivelConsideraciones, nivel, tiempo_partida, tiempo_ronda):
+    ''' 
+    Función que setea mis valores iniciales (para mostrarlos por pantalla) de acuerdo a la partida guardada
+    ''' 
     actualizar_multi(jugadores[0], multiUser, multiPC)
     actualizar_multi(jugadores[1], multiUser, multiPC)
     ultimaPalabra.Update(ultima_palabra[0].lower())
