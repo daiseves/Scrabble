@@ -145,7 +145,7 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
                 
     if tiempo_partida==0:
         #fun.ganador(jugadores, tiempo=True)
-        termino_juego(jugadores, bag, tiempo=False)
+        fun.termino_juego(jugadores, bag, tiempo=False)
         top.guardo_puntajes(jugador, nivel)
         diccTablero.clear()
     else:
