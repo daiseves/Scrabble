@@ -94,7 +94,7 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
         
                 
             if event is 'Validar':
-                if len(dicc)<=1:
+                if len(dicc)==1:
                     sg.popup('No se pueden formar palabras de una sóla letra.')
                 else:
                     fun.validar_palabra(window, jugadores, diccTablero, dicc, jugador, window.FindElement('_puntajeUser_'), window.FindElement('_puntajePC_'), window.FindElement('_ultimaPalabra_'), cant_rondas, board, nivel, ultima_palabra, bag)
