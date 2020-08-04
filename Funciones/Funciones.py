@@ -414,17 +414,17 @@ def columna_3():
     y los botones que dan fin al juego.
     '''
     sg.SetOptions(text_element_background_color='#D2B3BB', element_background_color='#D2B3BB')
-    des={'font':('Verdana', 10)}
+    des={'font':('Verdana', 10, 'bold')}
     des2={'font':('Verdana', 15, 'bold')}
-    des3={'font':('Verdana', 10), 'button_color': ('saddlebrown','#E5CEAC'), 'size':(16, 2), 'pad':((5,0),(30,0))}
+    des3={'font':('Verdana', 10), 'button_color': ('saddlebrown','#E5CEAC'), 'size':(16, 2), 'pad':((2,2),(45,2))}
     des4={'font':('Verdana', 10), 'title_color':'white', 'pad':(10,10)}
     frame_layout_user = [[sg.Text('0',key='_puntajeUser_', size=(10,2))]]
     frame_layout_pc = [[sg.Text('0', key='_puntajePC_', size=(10,2))]]
     
     columna_3 = [
-                [sg.Text('TIEMPO (ronda / partida)', font=('Verdana', 15), text_color='saddlebrown')],
+                [sg.Text('TIEMPO (ronda / partida)', **des, background_color='#E5CEAC', text_color='saddlebrown')],
                 [sg.Text("00:00",key=('__tiempoTurno__'), **des2), sg.Text('/', **des2), sg.Text("00:00", key=('__tiempoPartida__'), **des2)],
-                [sg.Button('INICIAR', size=(25, 2), font=('Verdana', 10, 'bold')),],
+                [sg.Button('INICIAR', size=(25, 2), **des)],
                 [sg.Text(**des, key='__n__', size=(30, 1))],
                 [sg.Text(**des, key='__tp__',size=(30, 1))],
                 [sg.Text(**des, key='__tr__',size=(30, 1))],
@@ -434,7 +434,7 @@ def columna_3():
                 [sg.Text('Última palabra agregada:', **des)],
                 [sg.Multiline(default_text='Aún no se ha ingresado ninguna palabra.',size=(30,3),key='_ultimaPalabra_', autoscroll=False)],
                 [sg.Button('Salir', **des3),sg.Button('Posponer', **des3)],
-                [sg.Button('Terminar juego', button_color= ('white','saddlebrown'), size=(33, 2), **des)],
+                [sg.Button('Terminar juego', size=(30, 2), **des)],
               ]
     return columna_3
 
