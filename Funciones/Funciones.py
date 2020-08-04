@@ -377,7 +377,7 @@ def termino_juego(jugadores, bag):
                 [sg.Column(text2)],
                 [sg.Column(atril_interfaz_vacio(des2))],
                 [sg.Multiline(size=(50, 5), key='__ml2__')],
-                [sg.Button('Ver valores', **des), sg.Button('Calcular', **des), sg.Button('Salir', **des)],
+                [sg.Button('Ver valores', **des), sg.Button('Calcular', **des, button_color=('white','#EBA119')), sg.Button('Salir', **des)],
                 [sg.Image(filename='Imagenes/Gracias.png', pad=(0,10))]
              ]
 
