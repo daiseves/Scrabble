@@ -17,9 +17,9 @@ def actualizo_consideraciones(window, tiempo_partida, tiempo_ronda, nivel, bag):
     window.FindElement('__tp__').update(tp) 
     tr='Tiempo de cada ronda: {} sg'.format(tiempo_ronda)
     window.FindElement('__tr__').update(tr) 
-    pf='Cantidad de fichas:\n-A | I: {}\n-B | C | F | H | M | P | T | U | V | W | Y : {}\n-D | L | S: {}\n-E : {}\n-G: {}\n-J | K | Q | W | X | Z: {}\n-M | R: {}\n-O: {}'.format(cantidad_letras['A'],cantidad_letras['B'], cantidad_letras['D'], cantidad_letras['E'], cantidad_letras['G'], cantidad_letras['J'], cantidad_letras['M'], cantidad_letras['O'])
+    pf='Cantidad de fichas:\n-A | I: {}\n-B | C | F | H | M | P: {}\n-T | U | V | W | Y: {}\n-D | L | S: {}\n-E: {}\n-G: {}\n-J | K | Q | W | X | Z: {}\n-M | R: {}\n-O: {}'.format(cantidad_letras['A'],cantidad_letras['B'],cantidad_letras['B'], cantidad_letras['D'], cantidad_letras['E'], cantidad_letras['G'], cantidad_letras['J'], cantidad_letras['M'], cantidad_letras['O'])
     window.FindElement('__pf__').update(pf) 
-    cf='Puntaje de cada ficha:\n-A | E: {}\n-O : {}\n-I | S: {}\n-N | R | U | D: {}\n-L | T | C: {}\n-G | B | M | P | H | K | W: {}\n-F | V | Y | J: {}\n-Q | X | Z: {}'.format(valores_letras['A'], valores_letras['O'], valores_letras['I'], valores_letras['N'] , valores_letras['L'], valores_letras['G'], valores_letras['F'], valores_letras['Q'])
+    cf='Puntaje de cada ficha:\n-A | E: {}\n-O: {}\n-I | S: {}\n-N | R | U | D: {}\n-L | T | C: {}\n-G | B | M | P | H | K | W: {}\n-F | V | Y | J: {}\n-Q | X | Z: {}'.format(valores_letras['A'], valores_letras['O'], valores_letras['I'], valores_letras['N'] , valores_letras['L'], valores_letras['G'], valores_letras['F'], valores_letras['Q'])
     window.FindElement('__cf__').update(cf) 
     
 
