@@ -25,12 +25,14 @@ def configuracion(default):
         '''
         
         if default:
-            config={3: 9, 4: 2, 5: 4, 6: 12, 7: 3, 8: 1, 9: 6, 10: 8, 11: 1, 12: 2, 13: 3, 14: 4, 15: 5, 16: 8, 17: 10, 18: 12, '__tiempoTurno__': 60.0, '__tiempoPartida__': 60.0, '__dificultad__': 'Facil'}
+            config={3: 9, 4: 2, 5: 4, 6: 12, 7: 3, 8: 1, 9: 6, 10: 8, 11: 1, 12: 2, 13: 3, 14: 4, 15: 5, 16: 8, 17: 10, 18: 12, '__tiempoTurno__': 30.0, '__tiempoPartida__': 60.0, '__dificultad__': 'Facil'}
             return config, True
         else:
             des={'text_color':('saddlebrown'), 'size':(25,1), 'pad':((20,0),(0,10))}
             
             des2= {'background_color':('#A52A2A'),'range' : (10, 120), 'orientation' : ('h'), 'size' : (22,20), 'default_value' : (60)}
+            
+            des3 = {'background_color':('#A52A2A'),'range' : (10, 60), 'orientation' : ('h'), 'size' : (22,20), 'default_value' : (30)}
             
             nivel=[[sg.Radio('FÁCIL',1 ,key='Facil', **des ,default=True), sg.Radio('MEDIO',1,key='Medio', **des), sg.Radio('DIFÍCIL',1,key='Dificil',**des)]]
 
@@ -64,7 +66,7 @@ def configuracion(default):
                      [sg.Image(filename='Imagenes/4.png',pad=((10,50),(20,20))), sg.Image(filename='Imagenes/5.png')],
                      [sg.Column(cantidad_fichas), sg.Column(puntaje_fichas)],
                      [sg.Image(filename='Imagenes/7.png',pad=((10,50),(20,20))), sg.Image(filename='Imagenes/8.png')],
-                     [sg.Slider(**des2, key = '__tiempoTurno__', pad=((5,40),(5,0))), sg.Slider(**des2, key = '__tiempoPartida__',pad=((15,0),(5,0)))], 
+                     [sg.Slider(**des3, key = '__tiempoTurno__', pad=((5,40),(5,0))), sg.Slider(**des2, key = '__tiempoPartida__',pad=((15,0),(5,0)))], 
                      [sg.Button('Guardar cambios', font='centaur 15', pad=((0,40)), size=(20,1))]
                      ]        
                      
