@@ -304,6 +304,15 @@ def cargo(jugadores, multiUser, multiPC, ultimaPalabra, ultima_palabra, nivelCon
 #---------------------------------- FIN DEL JUEGO ----------------------------------
 
 
+def atril(window, jugadores):
+    aux=7
+    for i in range(len(jugadores[0].atril_array())):
+        window.FindElement(i).update(jugadores[0].atril_array()[i])
+
+    for j in range(len(jugadores[1].atril_array())):
+        window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
+        aux+=1
+
 def ganador(jugadores):
     '''
     Función que recibe como parámetro mi lista de jugadores y me calcula el ganador del juego de acuerdo a sus puntajes.
@@ -311,12 +320,22 @@ def ganador(jugadores):
     max=-999
     ganador=""
     for jugador in jugadores:
+        print(jugador.get_puntajeFinal())
         if jugador.get_puntajeFinal()>max:
             max=jugador.get_puntajeFinal()
             ganador=jugador.get_name()
- 
-    sg.popup('El ganador es: ',ganador,'. ¡Felicitaciones! ')
-    
+        elif jugador.get_puntajeFinal()==max:
+            ganador='Empate'
+
+
+    if ganador=='PC':
+        imagen='Imagenes/Derrota.png'
+    elif ganador=='Empate': 
+        imagen='Imagenes/Empate.png'
+    else:
+        imagen='Imagenes/Victoria.png'
+        
+    return imagen
 
 
 def calcular(window, bag, jugadores):
@@ -331,12 +350,10 @@ def calcular(window, bag, jugadores):
     print(jugadores[0].atril_array())
     print(jugadores[1].atril_array())
     
-    aux=7
     resta=0
     text1=''
     text2=''
     for i in range(len(jugadores[0].atril_array())):
-        window.FindElement(i).update(jugadores[0].atril_array()[i])
         text1 = text1 + '- Letra: {} | Puntaje: {}\n'.format(jugadores[0].atril_array()[i], valores.get(jugadores[0].atril_array()[i]))
         resta = resta + valores.get(jugadores[0].atril_array()[i])
 
@@ -346,13 +363,12 @@ def calcular(window, bag, jugadores):
 
     resta=0
     for j in range(len(jugadores[1].atril_array())):
-        window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
         text2 = text2 + '- Letra {} | Puntaje {}\n'.format(jugadores[1].atril_array()[j], valores.get(jugadores[1].atril_array()[j]))
         resta = resta + valores.get(jugadores[1].atril_array()[j])
-        aux+=1
         
     total = jugadores[1].get_puntaje() - resta
     jugadores[1].set_puntajeFinal(total)
+
     final2 ='-Puntaje del jugador: {}\n-Suma de las fichas que quedaron en el atril: {}\n{} - {} = {} '.format(jugadores[1].get_puntaje(), resta, jugadores[1].get_puntaje(), resta, total)
     
     return text1, text2, final1, final2
@@ -362,43 +378,48 @@ def termino_juego(jugadores, bag):
     '''
     Función que desarrolla la interfaz gráfica que se muestra una vez finalizado el juego
     '''
-    sg.SetOptions(background_color=('#E5CEAC'), text_element_background_color='#E5CEAC', element_background_color='#E5CEAC', text_color='saddlebrown')
-    des={'font':('Verdana', 10), 'size':(12, 2)}
-    des2={'button_color': ('saddlebrown','#FFE0A3'),'size':(4,2), 'font':('Verdana', 14), 'pad':(0 , 10)}
+    sg.SetOptions(background_color=('#D2B3BB'), text_element_background_color='#D2B3BB', element_background_color='#D2B3BB', text_color='saddlebrown')
+    des={'font':('Verdana', 10), 'size':(12, 2), 'pad':((2,2),(30,30))}
+    des1={'font':('Verdana', 15, 'bold'), 'text_color':('white')}
+    des2={'button_color': ('saddlebrown','#FFE0A3'),'size':(4,2), 'font':('Verdana', 14)}
+    des3={'font':('Verdana', 13)}
+     
+    text1= [[sg.Text('Fichas de:', **des3)] + [sg.Text(jugadores[0].get_name(), **des3)]]
+    text2= [[sg.Text('Fichas de:', **des3)] + [sg.Text(jugadores[1].get_name(), **des3)]]
     
-    text1= [[sg.Text('Fichas de: ', **des)] + [sg.Text(jugadores[0].get_name(), **des)]]
-    text2= [[sg.Text('Fichas de: ', **des)] + [sg.Text(jugadores[1].get_name(), **des)]]
     
 
     layout = [  
+                [sg.Text('LA PARTIDA HA FINALIZADO', **des1)],
                 [sg.Column(text1)],
                 [sg.Column(atril_interfaz(des2))],
                 [sg.Multiline(size=(50, 5), key='__ml1__')],
                 [sg.Column(text2)],
                 [sg.Column(atril_interfaz_vacio(des2))],
                 [sg.Multiline(size=(50, 5), key='__ml2__')],
-                [sg.Button('Ver valores', **des), sg.Button('Calcular', **des, button_color=('white','#EBA119')), sg.Button('Salir', **des)],
-                [sg.Image(filename='Imagenes/Gracias.png', pad=(0,10))]
+                [sg.Button('Ver valores', **des), sg.Button('Calcular', **des), sg.Button('Salir', **des)],
+                [sg.Image(filename='', pad=(0,10), key='__final__')]
              ]
 
     window = sg.Window('¡Gracias por jugar al ScrabbleAR!', layout, (500, 600), element_justification='center')
-
-    
+    window.Finalize()
+            
+    atril(window, jugadores)
+    valores=calcular(window, bag, jugadores)
+    imagen=ganador(jugadores)
+    window.FindElement('__final__').update(imagen)
     while True:
         event, values = window.read()
         if event == 'Ver valores':
-            valores=calcular(window, bag, jugadores)
             lista1=valores[0]
             lista2=valores[1]
             window.FindElement('__ml1__').update(lista1)
             window.FindElement('__ml2__').update(lista2)
         if event is 'Calcular':
-            valores=calcular(window, bag, jugadores)
             total1=valores[2]
             total2=valores[3]
             window.FindElement('__ml1__').update(total1)
             window.FindElement('__ml2__').update(total2)
-            ganador(jugadores)
         if event is 'Salir':
             window.Close()
             break
