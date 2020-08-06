@@ -13,9 +13,8 @@ class Board:
         self.nivel=nivel
         self.ini_dim()
         self.bag=Bag
-        self.ficha_central=self.bag.dar_ficha()
         self.cant_rondas=1
-
+        self.ficha_centro=''
 
     def ini_dim(self):
         '''
@@ -73,16 +72,18 @@ class Board:
         '''
         Retorna al valor de la ficha que inicia en el centro del tablero al comienzo del juego
         '''
-        return self.ficha_central
-    
+
+        return self.ficha_centro
+        
+
     def agregar_centro(self, esqueleto):
         '''
         Recibe como parámetro mi tablero con los bonus ya agregados y le añade la ficha que inicia en el centro al comienzo del juego
         '''
         m=self.get_medio()[0]
         s=self.get_medio()[1]
-        fichita=self.ficha_centro()
-        esqueleto[m][s]=sg.Button(fichita,size=(4, 2), key=(m,s), pad=(0,0), button_color=('saddlebrown','#FFE0A3'))
+        self.ficha_centro=self.bag.dar_ficha()
+        esqueleto[m][s]=sg.Button(self.ficha_centro,size=(4, 2), key=(m,s), pad=(0,0), button_color=('saddlebrown','#FFE0A3'))
         return esqueleto
         
     def get_board(self, carga, dic):
@@ -90,11 +91,11 @@ class Board:
         Arma mi tablero final y lo retorna
         '''
         aux=self.esqueleto()
-        tablerogame=self.agregar_centro(aux)
         if carga:
-            t=self.guardo_board(dic, tablerogame)
+            t=self.guardo_board(dic, aux)
             return t
         else:
+            tablerogame=self.agregar_centro(aux)
             return tablerogame
 
         
@@ -119,19 +120,21 @@ class Board:
             if (fila, columna) in self.lista_coordenadas():
                 prob=self.coordenadas()
                 if (fila, columna) in prob[0]:
-                    window[(fila, columna)]('', image_filename='Imagenes/x2.png', image_size=(36, 35), pad=(0,0), button_color=('white', '#79B7BF'))
+                    window[(fila, columna)]('', image_filename='Imagenes/x2.png', image_size=(36, 35), button_color=('white', '#79B7BF'))
                 elif (fila, columna) in prob[1]:
-                    window[(fila, columna)]('', image_filename='Imagenes/x3.png', image_size=(36, 35), pad=(0,0), button_color=('white', '#D2B3BB'))
+                    window[(fila, columna)]('', image_filename='Imagenes/x3.png', image_size=(36, 35), button_color=('white', '#D2B3BB'))
                 elif (fila, columna) in prob[2]:
-                    window[(fila, columna)]('', image_filename='Imagenes/-2.png', image_size=(36, 35), pad=(0,0))
+                    window[(fila, columna)]('', image_filename='Imagenes/-2.png', image_size=(36, 35))
                 elif (fila, columna) in prob[3]:
-                    window[(fila, columna)]('', image_filename='Imagenes/-2.png', image_size=(36, 35), pad=(0,0))
+                    window[(fila, columna)]('', image_filename='Imagenes/-2.png', image_size=(36, 35))
                 elif (fila, columna) in prob[4]:
-                    window[(fila, columna)]('', image_filename='Imagenes/bomba.png', image_size=(36, 35), pad=(0,0), button_color=('white', 'white'))
+                    window[(fila, columna)]('', image_filename='Imagenes/bomba.png', image_size=(36, 35), button_color=('white', 'white'))
                 elif (fila, columna) in prob[5]:
-                    window[(fila, columna)]('', image_filename='Imagenes/estrella.png', image_size=(36, 35), pad=(0,0), button_color=('white', 'white'))
+                    window[(fila, columna)]('', image_filename='Imagenes/estrella.png', image_size=(36, 35), button_color=('white', 'white'))
             else:
                 window.FindElement((fila, columna)).update('', button_color=('peachpuff','white'))
+        print(diccTablero)
+        print(fichas_devolver)
 
 
     def coordenadas(self):
@@ -165,6 +168,9 @@ class Board:
     
     
     def guardo_board(self, dic, tablerogame):
+        '''
+        Función que setea los valores de mi tablero guardado y lo retorna
+        '''
         t=tablerogame
         lista_values=[]
         aux=0
@@ -177,9 +183,6 @@ class Board:
 
 
     def lista_coordenadas(self):
-        ''' 
-        Retorna una sola lista con todas las coordenadas donde hay bonus según el nivel.
-        ''' 
         coordenadas=self.coordenadas()
         lista_coord=[]
         for elem in coordenadas:
@@ -187,5 +190,4 @@ class Board:
                 lista_coord.append(i)
     
         return lista_coord
-        
     
