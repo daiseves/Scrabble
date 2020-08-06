@@ -196,20 +196,23 @@ def juega_PC(dicc,dicTablero, ficha_central, jugador, board, window, jugadores, 
     
     palabra=generador_de_palabra(ficha_central, jugador, board, cant_rondas, dicTablero, bag)
     if palabra[0]!=None:
-        posiciona_palabra(palabra[0], ficha_central, dicTablero, board, jugador, window, cant_rondas, dicc, lista_coordenadas)
+        posiciona_palabra(palabra[0], ficha_central, dicTablero, board, jugador, window, cant_rondas, dicc, lista_coordenadas, nivel)
         puntaje=palabra[1].calcular_puntaje(dicc)
         jugador.aumentar_puntaje(puntaje)
         text='La PC encontró la palabra {} con puntaje {}'.format(palabra[0], puntaje)
-        sg.popup(text ,background_color='#D2B3BB')
+        sg.popup(text ,title='Válida', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         ultimaPalabra.Update(palabra[1].get_palabra().lower())
         ultima_palabra[0]=palabra[1].get_palabra().lower()
         fun.actualizar_multi(jugador,multiUser, multiPC)
-        jugador.actualizar_atril(dicc, cant_rondas, nivel)
+        exito=jugador.actualizar_atril(dicc, cant_rondas, nivel)
+        if exito==None:
+            window.Finalize()
+            fun.termino_juego(jugadores, bag)
     else:
-        sg.popup('La PC no encontró ninguna palabra y su turno ha pasado', background_color='#D2B3BB')
+        sg.popup('La PC no encontró ninguna palabra y su turno ha pasado', title=':(', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
+        cambia_fichasAI(window, jugador)
 
     jugador.vaciar_dicc()
-        
 
         
 
