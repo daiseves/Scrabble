@@ -9,8 +9,8 @@ class Jugador:
         self.bag=bag
         self.atril = Atril(self.bag)
         self.name=name
-        self.dicUser={}
-        self.dicPC={}
+        self.dicJugador={}
+        #self.dicPC={}
         self.puntaje=0
         self.puntaje_final=0
 
@@ -46,16 +46,12 @@ class Jugador:
         
         
     def set_puntajeFinal(self, total):
-        '''
-        Recibe como parámetro el puntaje total del jugador (con la resta correspondiente una vez que terminó la partida) y lo setea
-        ''' 
+        
         self.puntaje_final = total
 
         
     def get_puntajeFinal(self):
-        ''' 
-        Retorna el puntaje final del jugador
-        ''' 
+        
         return self.puntaje_final
         
         
@@ -66,13 +62,16 @@ class Jugador:
         Si la palabra fue válida, elimina las fichas jugadas del atril del jugador y le repone nuevas fichas
         ''' 
         cant=0
-        if cant_rondas==1:
+        try:
             if nivel == 'Facil':
                 del aux[(7,7)]
             elif nivel == 'Medio':
                 del aux[(8,8)]
             elif nivel == 'Difícil':
                 del aux[(9,9)]
+        except:
+            print('error')
+            pass
         valores=aux.values()
         for valor in valores:
             if valor in self.atril_array():
@@ -82,34 +81,32 @@ class Jugador:
         if exito:
             return self.atril
         else:
-            return None
+            return None 
         
     def get_dicc(self):
         '''
         Retorna un diccionario que representa la jugada de cada turno
         ''' 
-        if self.name=='PC':
-            return self.dicPC
-        else:
-            return self.dicUser
+        return self.dicJugador
 
     def vaciar_dicc(self):
         '''
         Vacía el diccionario de cada jugador una vez que finaliza el turno 
         ''' 
-        if self.name=='PC':
-            self.dicPC.clear()
-            return self.dicPC
-        else:
-            self.dicUser.clear()
-            return self.dicUser
+        self.dicJugador.clear()
+        return self.dicPC
+
 
     def cambiar_fichas(self, lista):
         '''
         Cambia las fichas del atril del jugador
         ''' 
-        for elem in lista:
-            self.atril_array().pop(self.atril_array().index(elem))
-        self.atril.reponer_fichas(len(lista))
-        self.bag.devolver_a_bolsa(lista)
+        if self.bag.cant_fichas_bolsa()>=len(lista):
+            for elem in lista:
+                self.atril_array().pop(self.atril_array().index(elem))
+            self.atril.reponer_fichas(len(lista))
+            self.bag.devolver_a_bolsa(lista)
+            return True
+        else:
+            return False            
 
