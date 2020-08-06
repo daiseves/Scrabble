@@ -1,10 +1,21 @@
+'''
+ScrabbleAR
+ - Autor: Remorini Maria Lara
+ - Mail: remoriniml@gmail.com
+ - GitHub: https://github.com/daiseves - 
+
+Todas las imagenes utilizadas en este proyecto son de propia autoría.
+'''
+
 import sys
 import copy
+import socket
 import pickle
 import os.path
 import PySimpleGUI as sg
 from Clases.Atril import Atril
 from Clases.Board import Board
+from Funciones import Top10 as top
 from Clases.Palabra import Palabra
 from Clases.Jugador import Jugador
 
@@ -23,6 +34,19 @@ FUNCIONES SOBRE:
 
 
 
+def verificar():
+    ''' 
+    Función que verifica si el usuario se encuentra conectado a una red. Es necesario para el uso del pattern.
+    ''' 
+    soc = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    try:
+        soc.connect(('www.google.com', 80))
+    except:
+        sg.popup('Para jugar debes estar conectado a internet.', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
+        sys.exit()
+    #soc.close()
+
+
 def instanciar_jugadores(bag, nom, jugadores):
     ''' 
     Función que instancia los dos jugadores que van a jugar una partida.
@@ -33,6 +57,14 @@ def instanciar_jugadores(bag, nom, jugadores):
     jugadores.append(jugador2)
     return jugadores
     
+    
+def reset(window, jugador, cant_rondas, diccTablero, board):
+    ''' 
+    Función que vacía el diccionario de cada jugador y devuelve esos valores al atril
+    ''' 
+    if jugador.get_dicc():
+        board.devolver_fichas(jugador.get_dicc(), cant_rondas, window, diccTablero)
+        jugador.vaciar_dicc()
 
 #---------------------------------- TURNO DEL USUARIO ----------------------------------    
 
@@ -49,16 +81,16 @@ def validar_palabra(window, jugadores, diccTablero, dicc, jugador, multiUser, mu
         puntaje=palabra.calcular_puntaje(diccOrd)
         jugador.aumentar_puntaje(puntaje)
         actualizar_multi(jugador,multiUser, multiPC)
-        exito=jugador.actualizar_atril(diccOrd, cant_rondas, nivel)
-        if exito==None:
-            window.Finalize()
-            termino_juego(jugadores, bag)
-        sg.popup('Palabra válida. Puntaje: ',puntaje, background_color='#D2B3BB')
+        sg.popup('Palabra válida.\nPuntaje: ',puntaje, background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         ultimaPalabra.Update(palabra.get_palabra().lower())
         ultima_palabra[0]=palabra.get_palabra().lower()
         diccTablero.update(dicc)
+        exito=jugador.actualizar_atril(diccOrd, cant_rondas, nivel)
+        if exito==None:
+            window.Finalize()
+            termino_juego(jugadores, bag, nivel)
     else:
-        sg.popup('Palabra Inválida. Perdió el turno. Se devuelven las fichas jugadas', background_color='#D2B3BB')
+        sg.popup('Palabra Inválida. Perdió el turno.\nSe devuelven las fichas jugadas', title='Palabra inválida', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         board.devolver_fichas(diccOrd, cant_rondas, window, diccTablero)
     jugador.vaciar_dicc()
     
@@ -83,7 +115,7 @@ def armar_palabra(dicc, event, aux, window, vacio, fila, columna, cant_rondas, b
     '''
     if cant_rondas==1 or len(diccTablero)==1:
         medio=board.get_medio()
-        dicc[(medio[0],medio[1])]=board.ficha_centro()
+        dicc[(medio[0],medio[1])]=board.ficha_centro
     if not dicc:
         dicc[event] = aux 
         actualizo_atril_tablero(window, vacio, event, aux, lista_coordenadas)
@@ -109,7 +141,7 @@ def pos_palabra(vieja_coord, nueva_coord, window, vacio, aux, dicc, fila, column
     elif nueva_coord[1] == vieja_coord[1] and columna:
         juego(vieja_coord, nueva_coord, window, vacio, aux, dicc, lista_coordenadas)
     else:
-        sg.popup('Error. Movimiento no permitido.')
+        sg.popup('Error. Movimiento no permitido.', title='No permitido', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         
             
 def juego (vieja_coord, nueva_coord,  window, vacio, aux, dicc, lista_coordenadas):
@@ -135,7 +167,7 @@ def verificar_segunda(event, pos, dicc, aux, window, vacio, lista_coordenadas):
         #print('entra columna')
         return 2
     else:
-        sg.popup('Error. Movimiento no permitido.')
+        sg.popup('Error. Movimiento no permitido.', title='No permitido', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
             
 
 def actualizo_atril_tablero(window, vacio, event, aux, lista_coordenadas):
@@ -162,34 +194,42 @@ def cambiar_fichas(window, jugador):
     layout = [
               [sg.Text('Seleccione las fichas a cambiar.',background_color='#E5CEAC')],
               [sg.Column(atril)],
-              [sg.Button('Cambiar',font=("Current",16), button_color=('white','saddlebrown'), pad=(90,0)), sg.Button('Cancelar',font=("Current",16),  button_color=('white','saddlebrown'))]
+              [sg.Button('Cambiar',font=("Current",16), button_color=('white','saddlebrown')), sg.Button('Cancelar',font=("Current",16),  button_color=('white','saddlebrown'))]
               ]
 
-    window2 = sg.Window('', layout, font=("Current",16), element_justification='center')
-    window2.Finalize()
-    
+    window2 = sg.Window('', layout, font=("Current",16), element_justification='center').finalize()
+
     for i in range(7):
         window2.FindElement((i,0)).update(jugador.atril_array()[i]) 
 
     cant=0
+    evento=[]
     letras_a_cambiar=[]
     
     sigue=True
     while sigue:
         event, values = window2.Read()
         if event in ((0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0)):
-            if cant!=3:
-                aux=jugador.atril_array()[event[0]]
+            aux=jugador.atril_array()[event[0]]
+            if cant!=3 and event not in evento:
+                evento.append(event)
                 window2.FindElement(event,0).update(aux,button_color=('white','saddlebrown'))
                 letras_a_cambiar.append(jugador.atril_array()[event[0]])
                 cant=cant+1
+            elif event in evento:
+                window2.FindElement(event,0).update(aux,button_color=('saddlebrown','#FFE0A3'))
+                evento.remove(event)
+                letras_a_cambiar.remove(aux)
+                cant=cant-1
             else:
-                sg.popup('Sólo se pueden cambiar tres letras por turno.')
+                sg.popup('Sólo se pueden cambiar tres letras por turno.',title='Error', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         if event is 'Cambiar':
-            jugador.cambiar_fichas(letras_a_cambiar)
-            completo_atril(window, jugador)
-            sigue=False
-            window2.Close()
+            if jugador.cambiar_fichas(letras_a_cambiar):
+                completo_atril(window, jugador)
+                sigue=False
+                window2.Close()
+            else:
+                sg.popup('No hay suficientes fichas en la bolsa.',title='Error', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         if event is 'Cancelar':
             window2.Close()
             sigue=False
@@ -241,20 +281,22 @@ def set_partida():
     tiempo_ronda=valores[6]
     tiempo_partida=valores[7]
     cant_cambios=valores[8]
+    tp_inicial=valores[9]
+    tr_inicial=valores[10]
     board=Board(bag, nivel)
     
-    lista=[bag, board, diccTablero, jugadores, nivel, cant_rondas, ultima_palabra, tiempo_ronda, tiempo_partida, cant_cambios]
+    lista=[bag, board, diccTablero, jugadores, nivel, cant_rondas, ultima_palabra, tiempo_ronda, tiempo_partida, cant_cambios, tp_inicial, tr_inicial]
     
     return lista
     
 
 
-def guardar_partida(dic, jugadores, bag, cant_rondas, ultima_palabra, nivel, cant_cambios, tiempo_partida, tiempo_ronda):
+def guardar_partida(dic, jugadores, bag, cant_rondas, ultima_palabra, nivel, cant_cambios, tiempo_partida, tiempo_ronda, tp_inicial, tr_inicial):
     ''' 
     Función que guarda una partida en proceso. Recibe el tablero, el usuario, la PC y la bolsa de fichas y los almacena.
     ''' 
     ruta = os.path.join('Archivos', '')
-    datos_guardar=[bag, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios]
+    datos_guardar=[bag, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios, tp_inicial, tr_inicial]
     with open(f'{ruta}''partidaGuardada.pckl', 'wb') as f:
         pickle.dump(datos_guardar, f, pickle.HIGHEST_PROTOCOL)
     f.close()
@@ -279,30 +321,36 @@ def cargar_partida():
             tiempo_ronda=juego[6]
             tiempo_partida=juego[7]
             cant_cambios=juego[8]
+            tp_inicial=juego[9]
+            tr_inicial=juego[10]
 
     except FileNotFoundError:
-        sg.popup('No existen partidas guardadas.')
+        sg.popup('No existen partidas guardadas.',title='Error', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
         sys.exit()
     else:
-        return bolsa, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios
+        return bolsa, jugadores, cant_rondas, dic, ultima_palabra, nivel, tiempo_ronda, tiempo_partida, cant_cambios, tp_inicial, tr_inicial
 
 
-def cargo(jugadores, multiUser, multiPC, ultimaPalabra, ultima_palabra, nivelConsideraciones, nivel, tiempo_partida, tiempo_ronda):
+def cargo(jugadores, multiUser, multiPC, ultimaPalabra, ultima_palabra, nivelConsideraciones, nivel, tiempo_partida, tiempo_ronda, tp_inicial, tr_inicial, tpConsideraciones, trConsideraciones):
     ''' 
     Función que actualiza los valores que se mostrarán por pantalla, según la configuración previamente guardada
     ''' 
+
+    n='Nivel de la partida: {}'.format(nivel)
+    tr='Tiempo de cada ronda: {} sg'.format(tp_inicial)
+    tp='Tiempo de la partida: {} min'.format(tr_inicial)
+    tpConsideraciones.Update(tp)
+    trConsideraciones.Update(tr)
+    nivelConsideraciones.Update(n)
     actualizar_multi(jugadores[0], multiUser, multiPC)
     actualizar_multi(jugadores[1], multiUser, multiPC)
     ultimaPalabra.Update(ultima_palabra[0].lower())
-    n='Nivel de la partida: {}'.format(nivel)
-    nivelConsideraciones.Update(n)
 
     return tiempo_partida, tiempo_ronda
     
     
     
 #---------------------------------- FIN DEL JUEGO ----------------------------------
-
 
 def atril(window, jugadores):
     aux=7
@@ -313,14 +361,15 @@ def atril(window, jugadores):
         window.FindElement(aux).update(jugadores[1].atril_array()[j]) 
         aux+=1
 
-def ganador(jugadores):
+def ganador(jugadores, nivel):
     '''
     Función que recibe como parámetro mi lista de jugadores y me calcula el ganador del juego de acuerdo a sus puntajes.
     '''
     max=-999
     ganador=""
     for jugador in jugadores:
-        print(jugador.get_puntajeFinal())
+        if jugador.get_name()!='PC':
+            top.guardo_puntajes(jugador, nivel)
         if jugador.get_puntajeFinal()>max:
             max=jugador.get_puntajeFinal()
             ganador=jugador.get_name()
@@ -347,9 +396,6 @@ def calcular(window, bag, jugadores):
     lista1=[]
     lista2=[]
     
-    print(jugadores[0].atril_array())
-    print(jugadores[1].atril_array())
-    
     resta=0
     text1=''
     text2=''
@@ -374,7 +420,7 @@ def calcular(window, bag, jugadores):
     return text1, text2, final1, final2
   
 
-def termino_juego(jugadores, bag):
+def termino_juego(jugadores, bag, nivel):
     '''
     Función que desarrolla la interfaz gráfica que se muestra una vez finalizado el juego
     '''
@@ -406,7 +452,7 @@ def termino_juego(jugadores, bag):
             
     atril(window, jugadores)
     valores=calcular(window, bag, jugadores)
-    imagen=ganador(jugadores)
+    imagen=ganador(jugadores, nivel)
     window.FindElement('__final__').update(imagen)
     while True:
         event, values = window.read()
@@ -422,7 +468,7 @@ def termino_juego(jugadores, bag):
             window.FindElement('__ml2__').update(total2)
         if event is 'Salir':
             window.Close()
-            break
+            sys.exit()
             
             
 
@@ -530,4 +576,3 @@ def layout_jugar(diccTablero, board, carga, des2):
     columna1 += botones
     columna3 =  columna_3()
     return columna1, columna3
-
