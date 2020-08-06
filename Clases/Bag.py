@@ -2,13 +2,6 @@ from random import shuffle
 
 #----------------------- CLASE BOLSA -----------------------
 class Bag:
-    
-    '''
-    
-        La clase Bag representa una bolsa de fichas.
-
-    '''
-    
     def __init__(self, cant, valores):
         self.bag=[]
         self.letras=list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -92,6 +85,4 @@ class Bag:
         ''' 
         for elem in lista:
             self.bag.append(elem)
-            
-            
 
