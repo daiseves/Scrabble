@@ -1,3 +1,12 @@
+'''
+ScrabbleAR
+ - Autor: Remorini Maria Lara
+ - Mail: remoriniml@gmail.com
+ - GitHub: https://github.com/daiseves - 
+
+Todas las imagenes utilizadas en este proyecto son de propia autoría.
+'''
+
 import json
 import PySimpleGUI as sg
 from operator import itemgetter
@@ -5,9 +14,6 @@ from datetime import datetime, date, time, timedelta
 
 
 def abro_archivo(ruta, nivel):
-    ''' 
-    Función que abre mi archivo json
-    ''' 
     with open(ruta) as f:
         data = json.load(f)
         f.close()
@@ -15,9 +21,6 @@ def abro_archivo(ruta, nivel):
 
 
 def muestro_valores(datos, lista):
-    ''' 
-    Función que retorna una cadena con la información del archivo abierto para luego mostrarla en pantalla.
-    ''' 
     #Ordeno mi lista de elementos por puntaje (mayor a menor)
     l = sorted(datos, key=itemgetter('Puntaje'), reverse=True)
     aux = 0
@@ -33,12 +36,9 @@ def muestro_valores(datos, lista):
     return text
 
 def guardo_puntajes(jugador, nivel):
-    ''' 
-    Función que recibe como parámetros al jugador y el nivel en el cual se encontraba jugando y guarda su puntaje una vez terminada la partida.
-    ''' 
     with open('Archivos/Top10.json','r+') as f:
         json_data = json.load(f)
-        puntaje=jugador.get_puntaje()
+        puntaje=jugador.get_puntajeFinal()
         fecha = datetime.now()
         fecha = "{} de {} del {}".format(fecha.day, fecha.month, fecha.year)
         valores={"Fecha": fecha, "Puntaje":puntaje, "Nivel": nivel}
@@ -50,9 +50,6 @@ def guardo_puntajes(jugador, nivel):
         
 
 def main():
-    ''' 
-    Función que desarrolla mi interfaz gráfica donde muestro los puntajes guardados en todos los niveles del juego.
-    ''' 
     sg.theme_background_color('#E5CEAC')
     des= {'button_color':('white','saddlebrown'), 'font':('centaur',15), 'pad':((0,40)), 'size':(10,1)}
     layout = [
@@ -91,4 +88,5 @@ def main():
             sg.popup('Error. No se ha encontrado el archivo.',background_color='#E5CEAC', text_color='saddlebrown')
 
     window.close()
+
 
