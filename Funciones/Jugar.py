@@ -43,7 +43,7 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
     cant_cambios=cant_cambios
     fun.completo_atril(window, jugador)
     
-    print(bag.cant_fichas_bolsa())
+
     sg.popup('Comienza el jugador: ',jugador.get_name(), title='Primer turno', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
     if carga: 
         temp=fun.cargo(jugadores, window.FindElement('_puntajeUser_'), window.FindElement('_puntajePC_'), window.FindElement('_ultimaPalabra_'), ultima_palabra, window.FindElement('__n__'), nivel, tiempo_partida, tiempo_ronda, tp_inicial, tr_inicial, window.FindElement('__tp__'), window.FindElement('__tr__'))
