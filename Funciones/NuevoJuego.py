@@ -1,3 +1,12 @@
+'''
+ScrabbleAR
+ - Autor: Remorini Maria Lara
+ - Mail: remoriniml@gmail.com
+ - GitHub: https://github.com/daiseves - 
+
+Todas las imagenes utilizadas en este proyecto son de propia autoría.
+'''
+
 import random
 import os.path as path
 import PySimpleGUI as sg
@@ -9,9 +18,6 @@ from Funciones import Configuracion as c
 
 
 def inicio():
-    ''' 
-    Función que verifica si existe una partida guardada. 
-    ''' 
     if path.exists('Archivos/partidaGuardada.pckl'):
         preguntar()
     else:
@@ -19,25 +25,24 @@ def inicio():
         
         
 def preguntar():
-    ''' 
-    Función que desarrolla mi interfaz gráfica donde pregunto si desea continuar con la partida guardada (si es que existe).
-    ''' 
     des={'font':('Verdana', 10), 'size':(10, 2)}
     layout=[[sg.Text("Hay una partida guardada ¿Desea continuarla?", font=("Current",13),  text_color= 'saddlebrown', pad=(0,10))], [sg.Button('Si', **des), sg.Button('No', **des)]]
     
     window = sg.Window('Partida guardada.', layout, size=(500,120), element_justification='center')
     event, values = window.Read()
     if event is 'Si':
-        print('ok')
+        window.Close()
+        carga=True
+        valor=f.set_partida()
+        jugador_actual=valor[3][1] if(valor[3][0].get_name()=='PC') else valor[3][0]
+        j.jugar(valor[0], valor[1], valor[2], valor[3], jugador_actual, valor[4], valor[5], valor[6], carga, valor[7], valor[8], valor[9], valor[10], valor[11])
     elif event is 'No':
         window.Close()
         main()
         
 
 def main():
-    ''' 
-    Función que desarrolla una nueva partida
-    ''' 
+    
     des={'font':("Current",16), 'size':(16, 2)}
         
     layout = [
@@ -45,7 +50,7 @@ def main():
              [sg.Button('Jugar',  **des), sg.Button('Configuración', **des)],
              [sg.Image(filename='Imagenes/1.png', pad=(0,30))]
              ]
-    window = sg.Window('¡Bienvenido!', layout, size=(630,370), element_justification='center')
+    window = sg.Window('¡Bienvenido!', layout, size=(630,350), element_justification='center')
 
     cant_rondas=1
     cant_cambios=0
@@ -62,16 +67,22 @@ def main():
             config=c.configuracion(default)
             default=config[1]
         if event is 'Jugar':
-            window.Close()
-            if default:
-                config=c.configuracion(default)
-            bag=Bag((dict(list(config[0].items())[0:8])), dict(list(config[0].items())[8:16]))
-            board=Board(bag, config[0]['__dificultad__'])
             nom=values['__nombre__']
-            jugadores=f.instanciar_jugadores(bag, nom, jugadores)
-            random.shuffle(jugadores)
-            jugador_actual=jugadores[0]
-            carga=False
-            j.jugar(bag, board, diccTablero, jugadores, jugador_actual, config[0]['__dificultad__'], cant_rondas, ultima_palabra, carga, config[0]['__tiempoPartida__'], config[0]['__tiempoTurno__'], cant_cambios)
+            print (len(nom))
+            if len(nom)<3 or len(nom)>10:
+                 sg.popup('El nombre debe tener entre 3 y 10 letras.',title='Error', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
+            else:
+                window.Close()
+                if default:
+                    config=c.configuracion(default)
+                bag=Bag((dict(list(config[0].items())[0:8])), dict(list(config[0].items())[8:16]))
+                board=Board(bag, config[0]['__dificultad__'])
+                jugadores=f.instanciar_jugadores(bag, nom, jugadores)
+                random.shuffle(jugadores)
+                jugador_actual=jugadores[0]
+                carga=False
+                tp_inicial=config[0]['__tiempoPartida__']
+                tr_inicial=config[0]['__tiempoTurno__']
+                j.jugar(bag, board, diccTablero, jugadores, jugador_actual, config[0]['__dificultad__'], cant_rondas, ultima_palabra, carga, config[0]['__tiempoPartida__'], config[0]['__tiempoTurno__'], cant_cambios, int(tp_inicial), int(tr_inicial))
 
 
