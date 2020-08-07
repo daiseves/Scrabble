@@ -84,5 +84,3 @@ def main():
                 tp_inicial=config[0]['__tiempoPartida__']
                 tr_inicial=config[0]['__tiempoTurno__']
                 j.jugar(bag, board, diccTablero, jugadores, jugador_actual, config[0]['__dificultad__'], cant_rondas, ultima_palabra, carga, config[0]['__tiempoPartida__'], config[0]['__tiempoTurno__'], cant_cambios, int(tp_inicial), int(tr_inicial))
-
-
