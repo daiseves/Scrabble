@@ -1,7 +1,10 @@
 import pattern.es
 from pattern.es import tag, spelling, lexicon, verbs
 
-
+# tipo = {'adj':["AO", "JJ","AQ","DI","DT"],
+        # 'sus':["NC", "NN", "NCS","NCP", "NNS","NP", "NNP","W"],
+        # 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG","VSI","VSN", "VSP","VSS"  ]}
+    
 #----------------------- CLASE PALABRA -------------------------------------------
                  
 class Palabra:
