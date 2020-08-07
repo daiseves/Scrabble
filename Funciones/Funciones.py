@@ -66,6 +66,7 @@ def reset(window, jugador, cant_rondas, diccTablero, board):
         board.devolver_fichas(jugador.get_dicc(), cant_rondas, window, diccTablero)
         jugador.vaciar_dicc()
 
+
 #---------------------------------- TURNO DEL USUARIO ----------------------------------    
 
 
@@ -576,8 +577,8 @@ def layout_jugar(diccTablero, board, carga, des2):
     columna1 += botones
     columna3 =  columna_3()
     return columna1, columna3
-   
-   
+
+
 def reglas():
     '''
     Función que desarrolla la interfaz gráfica donde se muestran las reglas del juego.
@@ -593,3 +594,4 @@ def reglas():
     event, values = window.Read()
     if event is 'Volver':
         window.Close()
+    
