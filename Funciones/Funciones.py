@@ -491,7 +491,7 @@ def columna_3():
     columna_3 = [
                 [sg.Text('TIEMPO (ronda / partida)', **des, background_color='#E5CEAC', text_color='saddlebrown')],
                 [sg.Text("00:00",key=('__tiempoTurno__'), **des2), sg.Text('/', **des2), sg.Text("00:00", key=('__tiempoPartida__'), **des2)],
-                [sg.Button('INICIAR', size=(25, 2), **des)],
+                [sg.Button('INICIAR', **des, size=(14, 2)), sg.Button('REGLAS', **des,  size=(14, 2))],
                 [sg.Text(**des, key='__n__', size=(30, 1))],
                 [sg.Text(**des, key='__tp__',size=(30, 1))],
                 [sg.Text(**des, key='__tr__',size=(30, 1))],
