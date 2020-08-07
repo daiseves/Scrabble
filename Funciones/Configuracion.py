@@ -76,6 +76,7 @@ def configuracion(default):
             while True:
                 event, values = window.Read()
                 if event == 'Guardar cambios':
+                    sg.popup('Los cambios han sido guardados correctamente.', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
                     config=set_config(values)
                     window.Close()
                     return config, False
