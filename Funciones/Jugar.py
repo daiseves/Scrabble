@@ -43,7 +43,6 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
     cant_cambios=cant_cambios
     fun.completo_atril(window, jugador)
     
-
     sg.popup('Comienza el jugador: ',jugador.get_name(), title='Primer turno', background_color='#E5CEAC', text_color='#8B4513', button_color= ('white','#8B4513'))
     if carga: 
         temp=fun.cargo(jugadores, window.FindElement('_puntajeUser_'), window.FindElement('_puntajePC_'), window.FindElement('_ultimaPalabra_'), ultima_palabra, window.FindElement('__n__'), nivel, tiempo_partida, tiempo_ronda, tp_inicial, tr_inicial, window.FindElement('__tp__'), window.FindElement('__tr__'))
@@ -56,10 +55,10 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
         centro=board.get_medio()
         diccTablero[(centro[0],centro[1])]=ficha_central
         ultima_palabra=['']
-        tiempo_partida = (int(tiempo_partida) * 60) *100 
-        tiempo_ronda = (int(tiempo_ronda) *100) 
+        tiempo_partida = (int(tiempo_partida) * 60) *100 #359999 una hora
+        tiempo_ronda = (int(tiempo_ronda) *100) #5999 un minuto
         tronda_inicial=tiempo_ronda
-        
+    
     
     while True and tiempo_partida!=0:
         window['__tiempoTurno__'].update('{:02d}:{:02d}'.format(((tiempo_ronda // 100) % 60), tiempo_ronda % 100))
@@ -77,8 +76,10 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
             jugador=fun.next_player(jugador,jugadores)
             cant_rondas=cant_rondas+1
             fun.completo_atril(window, jugador)
-            fila=True
+            tiempo_partida -= 1
             columna=True
+            fila=True
+
         else:
             #-----TURNO USER-----
             event, values = window.read(timeout=10)
@@ -158,6 +159,9 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
                 diccTablero.clear()
                 window.close()
                 break
+                
+            if event is 'REGLAS':
+                fun.reglas()
             
             #-----SI TERMINA EL TIEMPO DE LA RONDA-----    
             if tiempo_ronda==0:
@@ -193,6 +197,9 @@ def jugar(bag, board, diccTablero, jugadores, jugador_actual, nivel, cant_rondas
         event, values = window.Read()
         if event is 'None':
             break
+        if event is 'REGLAS':
+            fun.reglas()
         if event is 'INICIAR':
             actualizo_consideraciones(window, tiempo_partida, tiempo_ronda, nivel, bag)
             turno(window, jugador_actual, tiempo_partida, tiempo_ronda, board, diccTablero, cant_rondas, jugadores, nivel, ultima_palabra, bag, carga, cant_cambios, tp_inicial, tr_inicial)
+
