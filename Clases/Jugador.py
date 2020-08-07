@@ -46,16 +46,12 @@ class Jugador:
         
         
     def set_puntajeFinal(self, total):
-        '''
-        Setea puntaje final del jugador
-        '''
+        
         self.puntaje_final = total
 
         
     def get_puntajeFinal(self):
-        '''
-        Retorna el puntaje final del jugador
-        '''
+        
         return self.puntaje_final
         
         
@@ -98,7 +94,7 @@ class Jugador:
         Vacía el diccionario de cada jugador una vez que finaliza el turno 
         ''' 
         self.dicJugador.clear()
-        return self.dicPC
+        return self.dicJugador
 
 
     def cambiar_fichas(self, lista):
@@ -113,4 +109,3 @@ class Jugador:
             return True
         else:
             return False            
-
