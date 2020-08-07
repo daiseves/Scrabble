@@ -1,7 +1,14 @@
+'''
+ScrabbleAR
+ - Autor: Remorini Maria Lara
+ - Mail: remoriniml@gmail.com
+ - GitHub: https://github.com/daiseves - 
+
+Todas las imagenes utilizadas en este proyecto son de propia autoría.
+'''
+
 import random
 import PySimpleGUI as sg
-
-
 
 def set_config(values):
     
@@ -28,15 +35,15 @@ def configuracion(default):
             config={3: 9, 4: 2, 5: 4, 6: 12, 7: 3, 8: 1, 9: 6, 10: 8, 11: 1, 12: 2, 13: 3, 14: 4, 15: 5, 16: 8, 17: 10, 18: 12, '__tiempoTurno__': 30.0, '__tiempoPartida__': 60.0, '__dificultad__': 'Facil'}
             return config, True
         else:
-            des={'text_color':('saddlebrown'), 'size':(25,1), 'pad':((20,0),(0,10))}
+            des = {'text_color':('saddlebrown'), 'size':(25,1), 'pad':((20,0),(0,10))}
             
-            des2= {'background_color':('#A52A2A'),'range' : (10, 120), 'orientation' : ('h'), 'size' : (22,20), 'default_value' : (60)}
+            des2 = {'background_color':('#A52A2A'),'range' : (10, 120), 'orientation' : ('h'), 'size' : (22,20), 'default_value' : (60)}
             
             des3 = {'background_color':('#A52A2A'),'range' : (10, 60), 'orientation' : ('h'), 'size' : (22,20), 'default_value' : (30)}
             
-            nivel=[[sg.Radio('FÁCIL',1 ,key='Facil', **des ,default=True), sg.Radio('MEDIO',1,key='Medio', **des), sg.Radio('DIFÍCIL',1,key='Dificil',**des)]]
+            nivel = [[sg.Radio('FÁCIL',1 ,key='Facil', **des ,default=True), sg.Radio('MEDIO',1,key='Medio', **des), sg.Radio('DIFÍCIL',1,key='Dificil',**des)]]
 
-            cantidad=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+            cantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 
             cantidad_fichas=[
@@ -82,4 +89,3 @@ def configuracion(default):
                     return config, False
                 if event is None:
                     return None, True
-
