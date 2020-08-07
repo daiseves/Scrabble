@@ -1,111 +1,86 @@
-from Clases.Atril import Atril
+import pattern.es
+from pattern.es import tag, spelling, lexicon, verbs
 
-#----------------------- CLASE JUGADOR -----------------------
-class Jugador:
-    def __init__(self, bag, name):
-        '''
-        Recibe como parámetros mi bolsa de fichas para crear el atril de cada jugador y el nombre del jugador actual para crear sus manos en cada ronda
-        '''
-        self.bag=bag
-        self.atril = Atril(self.bag)
-        self.name=name
-        self.dicJugador={}
-        #self.dicPC={}
-        self.puntaje=0
-        self.puntaje_final=0
+                 
+# tipo = {'adj':["AO", "JJ","AQ","DI","DT"],
+        # 'sus':["NC", "NN", "NCS","NCP", "NNS","NP", "NNP","W"],
+        # 'verb':[ "VAG", "VBG", "VAI","VAN", "MD", "VAS" , "VMG" , "VMI", "VB", "VMM" ,"VMN" , "VMP", "VBN","VMS","VSG","VSI","VSN", "VSP","VSS"  ]}
 
-    def set_name(self, name):
-        '''
-        Setea el nombre del jugador
-        '''
-        self.name = name
+#----------------------- CLASE PALABRA -------------------------------------------
+                 
+class Palabra:
+    def __init__(self, word, jugador, board, bag):
+        self.jugador=jugador
+        self.word=word
+        self.board=board
+        self.valores_letras=bag.valores_letras()
 
-    def get_name(self):
-        '''
-        Retorna el nombre del jugador
-        '''
-        return self.name
 
-    def atril_array(self):
+    def convert(self):
         '''
-        Retorna una lista que representa el atril del jugador
+        Verifica si una palabra es válida y retorna el resultado de la verificación
         ''' 
-        return self.atril.atril_array()
-
-    def aumentar_puntaje(self, aumento):
-        '''
-        Recibe un entero como argumento y se lo suma al puntaje del jugador
-        ''' 
-        self.puntaje = self.puntaje+aumento
-        
-    def get_puntaje(self):
-        '''
-        Retorna un entero que representa el puntaje del jugador
-        ''' 
-        return self.puntaje
-        
-        
-    def set_puntajeFinal(self, total):
-        
-        self.puntaje_final = total
-
-        
-    def get_puntajeFinal(self):
-        
-        return self.puntaje_final
-        
-        
-       
-    def actualizar_atril(self, aux, cant_rondas, nivel):
-        '''
-        Recibe como parámetros el nivel, la cantidad de rondas jugadas, y un aux(diccionario con los valores que se jugaron)
-        Si la palabra fue válida, elimina las fichas jugadas del atril del jugador y le repone nuevas fichas
-        ''' 
-        cant=0
-        try:
-            if nivel == 'Facil':
-                del aux[(7,7)]
-            elif nivel == 'Medio':
-                del aux[(8,8)]
-            elif nivel == 'Difícil':
-                del aux[(9,9)]
-        except:
-            print('error')
-            pass
-        valores=aux.values()
-        for valor in valores:
-            if valor in self.atril_array():
-                self.atril.eliminar_ficha(valor)
-                cant=cant+1
-        exito=self.atril.reponer_fichas(cant)
-        if exito:
-            return self.atril
+        if not self.word.lower() in pattern.es.verbs:
+            #print('La palabra NO está en verbs.')
+            if (self.word.lower() in pattern.es.lexicon) and (self.word.lower() in pattern.es.spelling):
+                #print('La palabra si existe.')
+                #self.clasificar_palabra(pal):
+                ok = True
+            else:
+                #print('La palabra ingresada no existe.')
+                ok = False
         else:
-            return None 
+            #print('La palabra si existe.')
+            ok = True
+            #self.clasificar_palabra(pal)
+        return ok
+
+            
+
+    # def clasificar_palabra(pal):
+        # aux=(tag(pal))
+        # p=aux[0][1]
+        # if p in (tipo['verb']):
+            # print('La palabra ingresada es un verbo.')
+        # elif p in (tipo['sus']):
+            # print('La palabra ingresada es un sustantivo.')
+        # elif p in (tipo['adj']): 
+            # print('La palabra ingresada es un ajetivo.')
+    
+
+
+    def calcular_puntaje(self, dic):
+        '''
+        Calcula el puntaje de la palabra jugada una vez que es tomada como válida. 
+        Retorna el puntaje como entero
+        ''' 
+        puntaje_parcial=0
+        bomba=0
+        estrella=0
+        aux=self.board.coordenadas()
         
-    def get_dicc(self):
-        '''
-        Retorna un diccionario que representa la jugada de cada turno
-        ''' 
-        return self.dicJugador
+        for key, value in dic.items():
+            if key in aux[0]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]*2
+            elif key in aux[1]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]*3
+            elif key in aux[2]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]-2
+            elif key in aux[3]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]-3
+            elif key in aux[4]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]
+                bomba=bomba+1
+            elif key in aux[5]:
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]
+                estrella=estrella+1
+            else: 
+                puntaje_parcial=puntaje_parcial+self.valores_letras[value]
 
-    def vaciar_dicc(self):
-        '''
-        Vacía el diccionario de cada jugador una vez que finaliza el turno 
-        ''' 
-        self.dicJugador.clear()
-        return self.dicJugador
+        puntaje_total=(puntaje_parcial+(estrella*5)-(bomba*4))      
+        return puntaje_total
+        
 
-
-    def cambiar_fichas(self, lista):
-        '''
-        Cambia las fichas del atril del jugador
-        ''' 
-        if self.bag.cant_fichas_bolsa()>=len(lista):
-            for elem in lista:
-                self.atril_array().pop(self.atril_array().index(elem))
-            self.atril.reponer_fichas(len(lista))
-            self.bag.devolver_a_bolsa(lista)
-            return True
-        else:
-            return False            
+    def get_palabra(self):
+        return self.word
+   
