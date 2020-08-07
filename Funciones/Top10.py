@@ -88,5 +88,3 @@ def main():
             sg.popup('Error. No se ha encontrado el archivo.',background_color='#E5CEAC', text_color='saddlebrown')
 
     window.close()
-
-
