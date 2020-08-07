@@ -50,15 +50,16 @@ def turno(window, jugador, tiempo_partida, tiempo_ronda, board, diccTablero, can
         ficha_central=diccTablero[(7,7)] if nivel == 'Facil' else diccTablero[(8,8)] if nivel == 'Medio' else diccTablero[(9,9)]
         tiempo_ronda = temp[0]
         tiempo_partida = temp[1]
+        tronda_inicial=(int(tp_inicial) *100)
     else:
         ficha_central=board.ficha_centro
         centro=board.get_medio()
         diccTablero[(centro[0],centro[1])]=ficha_central
         ultima_palabra=['']
-        tiempo_partida = (int(tiempo_partida) * 60) *100 #359999 una hora
-        tiempo_ronda = (int(tiempo_ronda) *100) #5999 un minuto
+        tiempo_partida = (int(tiempo_partida) * 60) *100 
+        tiempo_ronda = (int(tiempo_ronda) *100) 
+        tronda_inicial=tiempo_ronda
         
-    tronda_inicial=(int(tr_inicial) *100)
     
     while True and tiempo_partida!=0:
         window['__tiempoTurno__'].update('{:02d}:{:02d}'.format(((tiempo_ronda // 100) % 60), tiempo_ronda % 100))
