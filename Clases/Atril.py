@@ -79,5 +79,3 @@ class Atril:
             return False
         else:
             return True
-        
-        
