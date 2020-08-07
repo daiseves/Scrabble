@@ -183,6 +183,9 @@ class Board:
 
 
     def lista_coordenadas(self):
+        '''
+        Función que retorna una lista de todas las coordenadas donde se encuentran las casillas con bonus o descuentos (por nivel)
+        '''
         coordenadas=self.coordenadas()
         lista_coord=[]
         for elem in coordenadas:
@@ -190,4 +193,5 @@ class Board:
                 lista_coord.append(i)
     
         return lista_coord
+        
     
