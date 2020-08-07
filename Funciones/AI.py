@@ -41,14 +41,12 @@ def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero, 
     Función que recibe una lista de combinaciones posibles y toma la primer palabra verificada como válida.
     
     """
-    j=2    #Combinaciones de tantas letras. 2 =  combinaciones de cuatro letras
+    j=1    #Combinaciones de tantas letras. 2 =  combinaciones de cuatro letras
     found=True
     combinaciones=combinaciones_pc(ficha_centro, jugador, cant_rondas)
     while found and j>=0:
-        print(j)
         i=0
         while found and i<len(combinaciones[j]):
-            print(combinaciones[j])
             if combinaciones!=None :
                 word = "".join(combinaciones[j][i])
                 palabra=Palabra(word, jugador, board, bag)
@@ -62,12 +60,10 @@ def generador_de_palabra(ficha_centro, jugador, board, cant_rondas, dicTablero, 
                         found= False
                         return word, palabra
                 i=i+1
-        print(found)
         j=j-1     
     
     #Si llega al valor de len(combinaciones), significa que no encontró la palabra
     if found:
-        print('entra')
         word=None
         return word, False
             
