@@ -576,3 +576,20 @@ def layout_jugar(diccTablero, board, carga, des2):
     columna1 += botones
     columna3 =  columna_3()
     return columna1, columna3
+   
+   
+def reglas():
+    '''
+    Función que desarrolla la interfaz gráfica donde se muestran las reglas del juego.
+    '''
+    sg.SetOptions(background_color='#D2B3BB')
+    des={'font':('Verdana', 10), 'size':(10, 2)}
+    layout=[
+           [sg.Image(filename='Imagenes/Reglas.png', size=(630,700))], 
+           [sg.Button('Volver', **des)]]
+    
+    window = sg.Window('Reglas del juego.', layout, size=(630,800), element_justification='center')
+    
+    event, values = window.Read()
+    if event is 'Volver':
+        window.Close()
