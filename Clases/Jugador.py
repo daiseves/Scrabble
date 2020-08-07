@@ -70,7 +70,6 @@ class Jugador:
             elif nivel == 'Difícil':
                 del aux[(9,9)]
         except:
-            print('error')
             pass
         valores=aux.values()
         for valor in valores:
