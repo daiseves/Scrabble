@@ -85,4 +85,3 @@ class Bag:
         ''' 
         for elem in lista:
             self.bag.append(elem)
-
