@@ -6,6 +6,9 @@ ScrabbleAR es un juego de palabrar basado en el Scrabble, en el cual se intenta 
 
 ## Tener en cuenta ⚠️
   * La configuración del nivel modifica el tamaño del tablero. (Fácil: tablero de 15x15: - Medio: tablero de 17x17 - Difícil: tablero de 19x19). Cambian además las casillas de       bonus con el fin de aumentarle la complejidad al armado de palabras. 
+  * En el nivel FÁCIL, se aceptan sustantivos, adjetivos y verbos.
+  * En el nivel MEDIO, se aceptan sustantivos y adjetivos.
+  * En el nivel DIFÍCIL, se aceptan sólo verbos.
   * El nivel por defecto es 'Fácil'.
   * Se pone una ficha aleatoria en el centro del tablero al comienzo del juego
   * La segunda ficha ingresada debe estar al lado de la primer ficha dispuesta, tanto al inicio del juego  (válido tanto para la Pc como para el jugador) como al inicio de cada     ronda
